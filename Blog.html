@@ -1,0 +1,2771 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Header with Off-Canvas Menu</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Satisfy&family=Hind+Siliguri:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <style>
+
+        body {
+            font-family: Hind Siliguri, sans-serif;
+            margin: 0;
+            overflow-x: hidden;
+            /* Prevent horizontal scrolling */
+        }
+
+        /* =================================Some Necessary CSS================== */
+        /* ------------Hide-ScrollBar-------- */
+        body {
+            ::-webkit-scrollbar {
+                display: none;
+            }
+        }
+
+        /*------ Remove-Click-Box---------*/
+        a:active,
+        a:focus {
+            outline: 0;
+            border: none;
+            -moz-outline-style: none;
+        }
+
+        a:focus {
+            outline: solid 0px !important;
+        }
+
+        *:focus {
+            outline: 0 !important;
+        }
+
+        /*------ Remove-Click-Blue-Highlight--- */
+        * {
+            -webkit-tap-highlight-color: rgba(255, 255, 255, 0) !important;
+            -webkit-focus-ring-color: rgba(255, 255, 255, 0) !important;
+            outline: none !important;
+        }
+
+        /* Text select korle background green hoye jabe*/
+        ::-moz-selection {
+            background-color: #ff0040;
+            color: #fff;
+        }
+
+        ::selection {
+            background-color: #ff0040;
+            color: #fff;
+        }
+
+
+        /* =================================Some Necessary CSS End================== */
+        .header {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            background-color: #333;
+            color: white;
+            position: sticky;
+            /* Make the header sticky */
+            top: -1px;
+            /* Stick to the top of the viewport */
+            z-index: 1000;
+            /* Ensure it's above other content */
+            width: 100%;
+            /* Full width */
+            box-sizing: border-box;
+        }
+
+        .scroll-container-X {
+            position: sticky;
+            /* Make the navbar sticky */
+            top: 50px;
+            /* Adjust according to the height of your header */
+            background-color: #242424;
+            /* Darker background for scroll container */
+            width: 100%;
+            overflow-x: auto;
+            white-space: nowrap;
+            padding: 5px 3px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            scrollbar-width: none;
+            /* Firefox */
+            z-index: 999;
+            /* Ensure it's below the header but above other content */
+        }
+
+        .scroll-container-X::-webkit-scrollbar {
+            display: none;
+            /* Chrome, Safari, Opera */
+        }
+
+        .header,
+        .scroll-container-X {
+            width: 100%;
+            box-sizing: border-box;
+            /* Ensure proper width calculation */
+        }
+
+        .logo {
+            font-size: 24px;
+            flex: 1;
+            transition: color 0.3s ease;
+            font-weight: bold;
+            /* background: linear-gradient(270deg, #fcffff, #71ff6c, #50fa7b, #8be9fd, #bd93f9); */
+            /* background: linear-gradient(270deg, #fcffff, #02dbf8, #50fa7b, #f99393, #ff0040); */
+            background: linear-gradient(270deg, #ff0040, #ffffff);
+            background-size: 400% 400%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradientAnimation 10s ease infinite;
+            user-select: none;
+            /* Prevent text selection */
+        }
+
+        @keyframes gradientAnimation {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        .nav-menu {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            user-select: none;
+            /* Prevent text selection */
+        }
+
+        .nav-menu a {
+            margin: 0 10px;
+            color: white;
+            text-decoration: none;
+            font-size: 13px;
+        }
+
+        .nav-menu a:hover {
+            color: #ff0040;
+        }
+
+        /* =======================Off-Canvas-Menu-CSS=========================== */
+        .menu-toggle {
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: white;
+            cursor: pointer;
+            margin-left: 20px;
+            margin-right: 20px;
+        }
+
+        /* General Styles */
+        .off-canvas-menu {
+            position: fixed;
+            top: 0;
+            right: -400px;
+            /* Initially hide the menu off-screen for desktop */
+            width: 400px;
+            /* Set the width for desktop */
+            height: 100%;
+            /* Full height of the viewport */
+            background-color: #333;
+            color: white;
+            transition: right 0.3s ease;
+            padding: 20px;
+            box-sizing: border-box;
+            z-index: 1000;
+            overflow-y: auto;
+            /* Allow vertical scrolling if content exceeds viewport */
+            user-select: none;
+            /* Prevent text selection */
+        }
+
+        /* When the menu is open */
+        .off-canvas-menu.open {
+            right: 0;
+            /* Slide in from the right edge */
+        }
+
+        .close-menu {
+            position: absolute;
+            top: 15px;
+            right: 30px;
+            font-size: 30px;
+            cursor: pointer;
+        }
+
+        .Off-Menu-txt {
+            margin-top: -1px;
+            font-size: 20px;
+            font-weight: bold;
+
+            font-size: 24px;
+            flex: 1;
+            transition: color 0.3s ease;
+            font-weight: bold;
+            background: linear-gradient(270deg, #fcffff, #71ff6c, #50fa7b, #8be9fd, #bd93f9);
+            /* background: linear-gradient(270deg, #fcffff, #02dbf8, #50fa7b, #f99393, #ff0040); */
+            background-size: 400% 400%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradientAnimation 7s ease infinite;
+            user-select: none;
+            /* Prevent text selection */
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .off-canvas-menu {
+                right: -100%;
+                /* Ensure it starts off-screen */
+                width: 100%;
+                /* Full width of the screen */
+                overflow-y: auto;
+                /* Allow vertical scrolling if needed */
+            }
+
+            .off-canvas-menu.open {
+                right: 0;
+                /* Slide in from the right edge */
+            }
+
+            .nav-menu {
+                display: none;
+            }
+
+            .search-container {
+                display: none;
+            }
+
+            .search-icon {
+                display: block;
+            }
+
+            .header {
+                justify-content: space-between;
+                /* Ensure spacing on mobile */
+            }
+
+            .search-box.full-width {
+                width: 100%;
+            }
+
+            .search-box.full-width input {
+                width: calc(100% - 50px);
+                /* Adjust width to fit the container */
+                border-radius: 25px;
+            }
+
+            .search-box.full-width .search-text {
+                display: none;
+            }
+
+            .menu-toggle {
+                margin-right: 10px;
+            }
+
+            .close-menu {
+                top: 10px;
+                right: 25px;
+            }
+
+        }
+
+        /* ================================Horizontal Nav================================== */
+        .wrapper-X {
+            font-family: Hind Siliguri, sans-serif;
+            background-color: #ffffff;
+            /* White background */
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            user-select: none;
+            /* Prevent text selection */
+        }
+
+        .scroll-container-X {
+            position: sticky;
+            /* Make the navbar sticky */
+            top: 50px;
+            /* Adjust according to the height of your header */
+            background-color: #242424;
+            /* Darker background for scroll container */
+            width: 100%;
+            overflow-x: auto;
+            white-space: nowrap;
+            padding: 5px 3px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            scrollbar-width: none;
+            /* Firefox */
+            z-index: 999;
+            /* Ensure it's below the header but above other content */
+        }
+
+        .scroll-container-X::-webkit-scrollbar {
+            display: none;
+            /* Chrome, Safari, Opera */
+        }
+
+        .scroll-content-X {
+            display: flex;
+            flex-wrap: nowrap;
+        }
+
+        .item-X {
+            display: inline-block;
+            width: 100%;
+            margin-right: 10px;
+            background-color: #333;
+            padding: 5px 7px;
+            margin: 0 3px;
+            border-radius: 3px;
+            text-align: center;
+            font-size: 13px;
+        }
+
+        .item-X a {
+            text-decoration: none;
+            color: #fff;
+            /* White text color */
+        }
+
+        .item-X.active-X {
+            background-color: #ff0040;
+            /* Active item background color */
+            color: #fff;
+        }
+
+        .item-X:last-child {
+            margin-right: 0;
+        }
+
+
+
+
+
+
+        /* ============================Tree-Off-Canvas========================= */
+
+        /* Centering the radio buttons */
+        .radio-inputs-container {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+            /* Adjust as needed */
+            width: 100%;
+        }
+
+        /* Centering the entire content */
+        #content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Ensure form is also centered */
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+
+
+        .radio-inputs-container {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+            /* Adjust as needed */
+        }
+
+
+        .radio-inputs {
+            position: relative;
+            display: flex;
+            flex-wrap: wrap;
+            border-radius: 5px;
+            background-color: #242424;
+            box-sizing: border-box;
+            box-shadow: 0 0 0px 1px rgba(0, 0, 0, 0.06);
+            padding: 0.25rem;
+            /* width: 300px; */
+            font-size: 14px;
+        }
+
+        .radio-inputs .radio {
+            flex: 1 1 auto;
+            text-align: center;
+        }
+
+        .radio-inputs .radio input {
+            display: none;
+        }
+
+        .radio-inputs .radio .name {
+            display: flex;
+            cursor: pointer;
+            align-items: center;
+            justify-content: center;
+            border-radius: 2px;
+            border: none;
+            padding: .5rem 0;
+            color: rgb(201, 201, 201);
+            transition: all .30s ease-in-out;
+        }
+
+        .radio-inputs .radio input:checked+.name {
+            background-color: #ff0040;
+            color: #fff;
+            font-weight: 600;
+        }
+
+        .content-section {
+            display: none;
+            margin-top: 20px;
+            text-align: left;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        /* -------link style start----------- */
+        a {
+            color: rgb(43, 255, 0);
+            text-decoration: none;
+        }
+
+        /* -------link style end----------- */
+
+        /* -------icon style start----------- */
+        i {
+            color: rgb(255, 255, 255);
+            padding: 0 0 10px 0;
+            /* background-color: violet; */
+            width: 25px;
+            display: inline-block;
+            text-align: center;
+        }
+
+        /* -------icon style end----------- */
+
+        /* ------------------Tree CSS Start---------------------- */
+
+        .wpr-offcanvas-content-right {
+            width: 400px !important;
+            /* Default width for larger screens */
+        }
+
+        /* Media query for mobile devices */
+        @media only screen and (max-width: 600px) {
+            .wpr-offcanvas-content-right {
+                width: 100% !important;
+                /* Width 100% for screens up to 600px wide (typically mobile devices) */
+            }
+        }
+
+
+
+        ul.tree,
+        ul.tree ul {
+            list-style: none;
+            margin: 0;
+            margin-left: 10px;
+            /* Adjust as needed */
+            padding: 0;
+            font-size: 15px;
+        }
+
+        ul.tree ul {
+            margin-left: 20px;
+            /* Adjust as needed */
+            display: none;
+        }
+
+        ul.tree li {
+            margin: 0;
+            padding: 0 7px;
+            line-height: 20px;
+            font-weight: bold;
+            border-left: 1px solid rgb(100, 100, 100);
+            color: white;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        ul.tree li:last-child {
+            border-left: none;
+        }
+
+        ul.tree li:before {
+            position: relative;
+            top: -0.3em;
+            height: 1.3em;
+            /* ekta subitem theke arektar height difference */
+            width: 12px;
+            border-bottom: 1px solid rgb(100, 100, 100);
+            color: white;
+            content: "";
+            display: inline-block;
+            left: -7px;
+        }
+
+        ul.tree li:last-child:before {
+            border-left: 1px solid rgb(100, 100, 100);
+        }
+
+        .Head-txt {
+            font-weight: bold;
+            font-size: 20px;
+            color: rgb(255, 255, 255);
+            cursor: pointer;
+            display: block;
+            /* margin-bottom: 5px; */
+        }
+
+        /* .glow-menu {
+                        position: relative;
+                        color: lime;
+                        text-shadow: 0 0 10px rgba(0, 255, 0, 0.9),
+                            0 0 20px rgba(0, 255, 0, 0.9),
+                            0 0 30px rgba(0, 255, 0, 0.9),
+                            0 0 40px rgba(0, 255, 0, 0.9),
+                            0 0 50px rgba(0, 255, 0, 0.9);
+                        animation: glow 1.5s infinite alternate;
+                        display: inline-block;
+                        padding: 10px 20px;
+                    }
+            
+                    @keyframes glow {
+                        from {
+                            text-shadow: 0 0 10px rgba(0, 255, 0, 0.7),
+                                0 0 20px rgba(0, 255, 0, 0.7),
+                                0 0 30px rgba(0, 255, 0, 0.7),
+                                0 0 40px rgba(0, 255, 0, 0.7),
+                                0 0 50px rgba(0, 255, 0, 0.7);
+                        }
+            
+                        to {
+                            text-shadow: 0 0 20px rgba(0, 255, 0, 1),
+                                0 0 40px rgba(0, 255, 0, 1),
+                                0 0 60px rgba(0, 255, 0, 1),
+                                0 0 80px rgba(0, 255, 0, 1),
+                                0 0 100px rgba(0, 255, 0, 1);
+                        }
+                    } */
+
+        #color-title {
+            color: aqua;
+        }
+
+        .glow-menu {
+            color: lime;
+        }
+
+        .tree-left {
+            align-content: left;
+            justify-content: left;
+
+        }
+
+        /* ------------------Tree CSS End---------------------- */
+
+        /* dual text css start */
+        .button-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 5px;
+            margin-top: 20px;
+        }
+
+        .button-container a {
+            display: flex;
+            font-family: Arial, sans-serif;
+            font-size: 11px;
+            text-align: center;
+            font-weight: bold;
+            text-decoration: none;
+            overflow: hidden;
+            padding: 0 px;
+            /* min-width: 80px;
+                        max-width: 120px; */
+        }
+
+        .license-button .left,
+        .version-button .left,
+        .follow-button .left,
+        .download-button .left {
+            background-color: #4c4c4c;
+            color: white;
+            padding: 5px 5px;
+        }
+
+        .license-button .right,
+        .version-button .right,
+        .follow-button .right,
+        .download-button .right {
+            padding: 5px 5px;
+            color: white;
+        }
+
+        .license-button .right {
+            background-color: #8fc74a;
+        }
+
+        .version-button .right {
+            background-color: #007ec6;
+        }
+
+        .follow-button .right {
+            background-color: #d9634c;
+        }
+
+        .download-button .right {
+            background-color: #ff9100;
+        }
+
+        /* dual text css end */
+
+        /* .Badge-M{
+                        font-size: 10px;
+                        background-color: red;
+                        padding: 0 5px;
+                        border-radius: 2px;
+                        margin-left: 8px;          
+                    } */
+
+        /* .Badge-M {
+                font-size: 10px;
+                background-color: red;
+                padding: 0 5px;
+                border-radius: 2px;
+                margin-left: 8px;
+                display: inline-block;
+                vertical-align: middle; 
+            } */
+
+        .Badge-R {
+            font-size: 10px;
+            /* background: linear-gradient(135deg, #f00, rgb(153, 0, 255)); */
+            background-color: #ff0040;
+            padding: 1px 7px;
+            border-radius: 2px;
+            margin-left: 8px;
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        .Badge-G {
+            font-size: 10px;
+            /* background: linear-gradient(135deg, #f00, rgb(153, 0, 255)); */
+            background-color: green;
+            padding: 1px 7px;
+            border-radius: 2px;
+            margin-left: 8px;
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        .fas.fa-rocket {
+            color: rgb(255, 255, 255);
+            padding: 0 0 0px 0;
+            width: 13px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="header">
+        <!-- <div class="logo">Script Glitch</div> -->
+        <div class="logo"><a href="index.html">Script Glitch</a></div>
+        <nav class="nav-menu">
+            <a href="index.html">Home</a>
+            <a href="Blog.html">Blog</a>
+            <a href="Faqs.html">FAQs</a>
+            <a href="#about">About Us</a>
+            <a href="#contact">Contact Us</a>
+            <a href="#terms">Terms & Conditions</a>
+            <a href="#privacy">Privacy Policy</a>
+        </nav>
+        <button class="menu-toggle" id="menuToggle">
+            <i class="fas fa-bars"></i>
+        </button>
+        <div class="off-canvas-menu" id="offCanvasMenu">
+            <span class="close-menu" id="closeMenu">
+                <i class="fas fa-times"></i>
+            </span>
+            <!-- Add your HTML tree here -->
+            <p class="Off-Menu-txt">Menu</p> <!--Eta remove korle off canvas er icon chole jay -->
+
+
+            <div>
+
+
+                <div class="radio-inputs">
+                    <label class="radio">
+                        <input type="radio" name="radio" checked="" value="tools">
+                        <span class="name">Tools</span>
+                    </label>
+                    <label class="radio">
+                        <input type="radio" name="radio" value="study">
+                        <span class="name">Study</span>
+                    </label>
+                    <label class="radio">
+                        <input type="radio" name="radio" value="pdf">
+                        <span class="name">PDF</span>
+                    </label>
+                    <label class="radio">
+                        <input type="radio" name="radio" value="resources">
+                        <span class="name">Resources</span>
+                    </label>
+                </div>
+
+
+                <!-- -----------tools content -------------- -->
+                <div id="tools-content" class="content-section active">
+                    <!----Most popular tools-tree-start---->
+                    <span class="Head-txt">
+                        <i class="fas fa-fire"></i> Most Popular
+                        <span class="Badge-R"><i class="fas fa-rocket"></i>
+                            Trending</span>
+                    </span>
+                    <ul class="tree">
+                        <li>Age Calculator</li>
+                        <li>Simple Calculator</li>
+                        <li>Prime Factorization Calculator</li>
+                        <li>Average Calculator</li>
+                        <li>Fibonacci Sequence Calculator</li>
+                        <li>Arithmetic Sequence Calculator</li>
+                        <li>Geometric Sequence Calculator</li>
+                        <li>Half Life Calculator</li>
+                    </ul>
+                    <!----Most popular tools-tree-end---->
+                    <span class="Head-txt"><i class="fas fa-calculator"></i> Calculators</span>
+                    <ul class="tree">
+                        <li class="toggle" id="color-title">Mathematical Calculator
+                            <ul>
+                                <li>Age Calculator</li>
+                                <li>Simple Calculator</li>
+                                <li>Prime Factorization Calculator</li>
+                                <li>Average Calculator</li>
+                                <li>Fibonacci Sequence Calculator</li>
+                                <li>Arithmetic Sequence Calculator</li>
+                                <li>Geometric Sequence Calculator</li>
+                                <li>Half Life Calculator</li>
+                            </ul>
+                        </li>
+                        <li class="toggle" id="color-title">Health Calculator
+                            <ul>
+                                <li>BMI Calculator</li>
+                                <li>BMR Calculator</li>
+                                <li>Ideal Weight Calculator</li>
+                                <li>Calorie Calculator</li>
+                            </ul>
+                        </li>
+                        <li class="toggle" id="color-title">Financial Calculator
+                            <ul>
+                                <li>Discount Calculator</li>
+                                <li>Percentage Calculator</li>
+                                <li>Simple Interest Calculator</li>
+                                <li>Compound Interest Calculator</li>
+                                <li>Profit Margin Calculator</li>
+                                <li>Investment Calculator</li>
+                                <li>Retirement Calculator</li>
+                                <li>GDP Calculator</li>
+                            </ul>
+                        </li>
+
+                    </ul>
+
+                    <!----Calculator-tree-end---->
+
+                    <!----Converter-tree-start---->
+
+                    <span class="Head-txt"><i class="fas fa-retweet"></i> Unit Converters</span>
+                    <ul class="tree">
+                        <li class="toggle" id="color-title">Fundamental Units
+                            <ul>
+                                <li><a href="Length-Converter.html">Length Converter</a></li>
+                                <li>Mass Converter</li>
+                                <li>Time Converter</li>
+                                <li>Temperature Converter</li>
+                                <li>Volume Converter</li>
+                                <li>Energy Converter</li>
+                                <li>Speed Converter</li>
+                                <li>Force Converter</li>
+                                <li>Pressure Converter</li>
+                            </ul>
+                        </li>
+                        <li class="toggle" id="color-title">Electricity Converters
+                            <ul>
+                                <li>Electric Potential Converter</li>
+                                <li>Electric Field Strength Converter</li>
+                                <li>Inductance Converter</li>
+                                <li>Electrostatic Capacitance Converter</li>
+                                <li>Electric Conductivity Converter</li>
+                                <li>Electric Conductance Converter</li>
+                                <li>Electric Resistivity Converter</li>
+                                <li>Electric Resistance Converter</li>
+                            </ul>
+                        </li>
+                        <li class="toggle" id="color-title">Radiation Converters
+                            <ul>
+                                <li>Radiation Exposure Converter</li>
+                                <li>Radiation Activity Converter</li>
+                                <li>Radiation Converter</li>
+                            </ul>
+                        </li>
+                        <li class="toggle" id="color-title">Magnetic Converters
+                            <ul>
+                                <li>Magnetic Flux Density Converter</li>
+                                <li>Magnetic Flux Converter</li>
+                                <li>Magnetic Field Strength Converter</li>
+                                <li>Magnetomotive Force Converter</li>
+                            </ul>
+                        </li>
+                        <li class="toggle" id="color-title">Optical Converters
+                            <ul>
+                                <li>Luminous Intensity Converter</li>
+                                <li>Luminance Converter</li>
+                                <li>Illuminance Converter</li>
+                            </ul>
+                        </li>
+                        <li class="toggle" id="color-title">Digital Converters
+                            <ul>
+                                <li>PDF to Image Converter</li>
+                                <li>Digital Image Resolution Converter</li>
+                                <li>Digital Storage Converter</li>
+                                <li>Case Converter</li>
+                            </ul>
+                        </li>
+                        <li class="toggle" id="color-title">Miscellaneous Converters
+                            <ul>
+                                <li>Angle Converter</li>
+                                <li>Sound Converter</li>
+                                <li>Surface Tension Converter</li>
+                            </ul>
+                        </li>
+
+                    </ul>
+
+                    <!----Converter-tree-end---->
+                    <!----Text Content tools-tree-start---->
+                    <span class="Head-txt "><i class="fas fa-pen"></i> Text Content</span>
+                    <ul class="tree">
+                        <li>Age Calculator</li>
+                        <li>Simple Calculator</li>
+                        <li>Prime Factorization Calculator</li>
+                        <li>Average Calculator</li>
+                        <li>Fibonacci Sequence Calculator</li>
+                        <li>Arithmetic Sequence Calculator</li>
+                        <li>Geometric Sequence Calculator</li>
+                        <li>Half Life Calculator</li>
+                    </ul>
+                    <!---Text Content tools-tree-end---->
+                    <!----Image Editing tools-tree-start---->
+                    <span class="Head-txt "><i class="fas fa-images"></i> Image Editing</span>
+                    <ul class="tree">
+                        <li>Age Calculator</li>
+                        <li>Simple Calculator</li>
+                        <li>Prime Factorization Calculator</li>
+                        <li>Average Calculator</li>
+                        <li>Fibonacci Sequence Calculator</li>
+                        <li>Arithmetic Sequence Calculator</li>
+                        <li>Geometric Sequence Calculator</li>
+                        <li>Half Life Calculator</li>
+                    </ul>
+                    <!---Image Editing tools-tree-end---->
+                    <!----Website Management tools-tree-start---->
+                    <span class="Head-txt "><i class="fas fa-globe"></i> Website Management</span>
+                    <ul class="tree">
+                        <li>Age Calculator</li>
+                        <li>Simple Calculator</li>
+                        <li>Prime Factorization Calculator</li>
+                        <li>Average Calculator</li>
+                        <li>Fibonacci Sequence Calculator</li>
+                        <li>Arithmetic Sequence Calculator</li>
+                        <li>Geometric Sequence Calculator</li>
+                        <li>Half Life Calculator</li>
+                    </ul>
+                    <!---Website Management Editing tools-tree-end---->
+                    <!----Other tools-tree-start---->
+                    <span class="Head-txt "><i class="fas fa-tools"></i> Other Tools</span>
+                    <ul class="tree">
+                        <li>Age Calculator</li>
+                        <li>Simple Calculator</li>
+                        <li>Prime Factorization Calculator</li>
+                        <li>Average Calculator</li>
+                        <li>Fibonacci Sequence Calculator</li>
+                        <li>Arithmetic Sequence Calculator</li>
+                        <li>Geometric Sequence Calculator</li>
+                        <li>Half Life Calculator</li>
+                    </ul>
+                    <!---Other Editing tools-tree-end---->
+                    <!----Games-tree-start---->
+                    <span class="Head-txt "><i class="fas fa-gamepad"></i> Games and Fun</span>
+                    <ul class="tree">
+                        <li>Age Calculator</li>
+                        <li>Simple Calculator</li>
+                        <li>Prime Factorization Calculator</li>
+                        <li>Average Calculator</li>
+                        <li>Fibonacci Sequence Calculator</li>
+                        <li>Arithmetic Sequence Calculator</li>
+                        <li>Geometric Sequence Calculator</li>
+                        <li>Half Life Calculator</li>
+                    </ul>
+                    <!---Games tools-tree-end---->
+                </div>
+                <!-- --------------------------Radio(Tools)-End--------------------------- -->
+                <!-- --------------------------Radio(Study)-start--------------------------- -->
+
+                <div id="study-content" class="content-section">
+
+                    <!----------Bangla Subject Start ------>
+                    <span class="Head-txt"><i class="fas fa-book-open"></i> বাংলা</span>
+                    <ul class="tree">
+                        <li class="toggle"> ব্যাকরণ
+                            <ul>
+                                <li>উচ্চারণ</li>
+                                <li>সন্ধি</li>
+                            </ul>
+                        <li class="toggle"> নির্মিতি (লিখিত)
+                            <ul>
+                                <li>রচনা</li>
+                                <li>সারাংশ</li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <!----------Bangla Subject Start ------>
+                    <!----------English Subject Start ------>
+                    <span class="Head-txt"><i class="fas fa-globe"></i> English</span>
+                    <ul class="tree">
+                        <li class="toggle"> ব্যাকরণ
+                            <ul>
+                                <li>উচ্চারণ</li>
+                                <li>সন্ধি</li>
+                            </ul>
+                        <li class="toggle"> নির্মিতি (লিখিত)
+                            <ul>
+                                <li>রচনা</li>
+                                <li>সারাংশ</li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <!----------English Subject Start ------>
+                    <!----------Math Subject Start ------>
+                    <span class="Head-txt"><i class="fas fa-square-root-alt"></i> Math
+                        <span class="Badge-G">
+                            NCTB + HSC (All Math)
+                        </span>
+                    </span>
+                    <ul class="tree">
+                        <li class="toggle"><i class="fas fa-graduation-cap"></i> Class 11-12
+                            <ul>
+                                <li class="toggle">Ketab Uddin Sir
+                                    <ul>
+                                        <li class="toggle">Chapter 01 (ম্যাট্রিক্স ও নির্ণায়ক)
+                                            <ul>
+                                                <li class="toggle">1 (A)
+                                                    <ul>
+                                                        <li>part-1</li>
+                                                        <li>part-2</li>
+                                                    </ul>
+                                                </li>
+                                                <li>1 (B)</li>
+                                            </ul>
+                                        </li>
+                                        <li class="toggle">Chapter 02 (ভেক্টর)
+                                            <ul>
+                                                <li>2 (A)</li>
+                                                <li>2 (B)</li>
+                                            </ul>
+                                        </li>
+                                        <li class="toggle">Chapter 03 (সরলরেখা)
+                                            <ul>
+                                                <li>3 (A)</li>
+                                                <li>3 (B)</li>
+                                                <li>3 (C)</li>
+                                                <li>3 (D)</li>
+                                                <li>3 (E)</li>
+                                                <li>3 (F)</li>
+                                                <li>3 (G)</li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="toggle">SU Ahmed Sir
+                                    <ul>
+                                        <li class="toggle">Chapter 01
+                                            <ul>
+                                                <li>1 (A)</li>
+                                                <li>1 (B)</li>
+                                            </ul>
+                                        </li>
+                                        <li class="toggle">Chapter 02
+                                            <ul>
+                                                <li>2 (A)</li>
+                                                <li>2 (B)</li>
+                                            </ul>
+                                        </li>
+                                        <li class="toggle">Chapter 03
+                                            <ul>
+                                                <li>3 (A)</li>
+                                                <li>3 (B)</li>
+                                                <li>3 (C)</li>
+                                                <li>3 (D)</li>
+                                                <li>3 (E)</li>
+                                                <li>3 (F)</li>
+                                                <li>3 (G)</li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="toggle"><i class="fas fa-vial"></i> Class 9-10
+                            <ul>
+                                <li class="toggle">Session 2024
+                                    <ul>
+                                        <li class="toggle">Chapter 01 (Algebra)
+                                            <ul>
+                                                <li>1 (A)</li>
+                                                <li>1 (B)</li>
+                                            </ul>
+                                        </li>
+                                        <li class="toggle">Chapter 02 (Geometry)
+                                            <ul>
+                                                <li>2 (A)</li>
+                                                <li>2 (B)</li>
+                                            </ul>
+                                        </li>
+                                        <li class="toggle">Chapter 03 (Trigonometry)
+                                            <ul>
+                                                <li>3 (A)</li>
+                                                <li>3 (B)</li>
+                                                <li>3 (C)</li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="toggle">Ms. Farah Sir
+                                    <ul>
+                                        <li class="toggle">Chapter 01 (Statistics)
+                                            <ul>
+                                                <li>1 (A)</li>
+                                                <li>1 (B)</li>
+                                            </ul>
+                                        </li>
+                                        <li class="toggle">Chapter 02 (Probability)
+                                            <ul>
+                                                <li>2 (A)</li>
+                                                <li>2 (B)</li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="toggle"><i class="fas fa-microscope"></i> Class 8
+                            <ul>
+                                <li class="toggle">Mr. Rahman Sir
+                                    <ul>
+                                        <li class="toggle">Chapter 01 (Algebra)
+                                            <ul>
+                                                <li>1 (A)</li>
+                                                <li>1 (B)</li>
+                                            </ul>
+                                        </li>
+                                        <li class="toggle">Chapter 02 (Geometry)
+                                            <ul>
+                                                <li>2 (A)</li>
+                                                <li>2 (B)</li>
+                                            </ul>
+                                        </li>
+                                        <li class="toggle">Chapter 03 (Trigonometry)
+                                            <ul>
+                                                <li>3 (A)</li>
+                                                <li>3 (B)</li>
+                                                <li>3 (C)</li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="toggle">Ms. Farah Sir
+                                    <ul>
+                                        <li class="toggle">Chapter 01 (Statistics)
+                                            <ul>
+                                                <li>1 (A)</li>
+                                                <li>1 (B)</li>
+                                            </ul>
+                                        </li>
+                                        <li class="toggle">Chapter 02 (Probability)
+                                            <ul>
+                                                <li>2 (A)</li>
+                                                <li>2 (B)</li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li class="toggle"><i class="fas fa-drafting-compass"></i> Class 7
+                            <ul>
+                                <li class="toggle">Mr. Rahman Sir
+                                    <ul>
+                                        <li class="toggle">Chapter 01 (Algebra)
+                                            <ul>
+                                                <li>1 (A)</li>
+                                                <li>1 (B)</li>
+                                            </ul>
+                                        </li>
+                                        <li class="toggle">Chapter 02 (Geometry)
+                                            <ul>
+                                                <li>2 (A)</li>
+                                                <li>2 (B)</li>
+                                            </ul>
+                                        </li>
+                                        <li class="toggle">Chapter 03 (Trigonometry)
+                                            <ul>
+                                                <li>3 (A)</li>
+                                                <li>3 (B)</li>
+                                                <li>3 (C)</li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="toggle">Ms. Farah Sir
+                                    <ul>
+                                        <li class="toggle">Chapter 01 (Statistics)
+                                            <ul>
+                                                <li>1 (A)</li>
+                                                <li>1 (B)</li>
+                                            </ul>
+                                        </li>
+                                        <li class="toggle">Chapter 02 (Probability)
+                                            <ul>
+                                                <li>2 (A)</li>
+                                                <li>2 (B)</li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li class="toggle"><i class="fas fa-calculator"></i> Class 6
+                            <ul>
+                                <li class="toggle">Mr. Rahman Sir
+                                    <ul>
+                                        <li class="toggle">Chapter 01 (Algebra)
+                                            <ul>
+                                                <li>1 (A)</li>
+                                                <li>1 (B)</li>
+                                            </ul>
+                                        </li>
+                                        <li class="toggle">Chapter 02 (Geometry)
+                                            <ul>
+                                                <li>2 (A)</li>
+                                                <li>2 (B)</li>
+                                            </ul>
+                                        </li>
+                                        <li class="toggle">Chapter 03 (Trigonometry)
+                                            <ul>
+                                                <li>3 (A)</li>
+                                                <li>3 (B)</li>
+                                                <li>3 (C)</li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="toggle">Ms. Farah Sir
+                                    <ul>
+                                        <li class="toggle">Chapter 01 (Statistics)
+                                            <ul>
+                                                <li>1 (A)</li>
+                                                <li>1 (B)</li>
+                                            </ul>
+                                        </li>
+                                        <li class="toggle">Chapter 02 (Probability)
+                                            <ul>
+                                                <li>2 (A)</li>
+                                                <li>2 (B)</li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li class="toggle"><i class="fas fa-atom"></i> Class 5
+                            <ul>
+                                <li class="toggle">Mr. Rahman Sir
+                                    <ul>
+                                        <li class="toggle">Chapter 01 (Algebra)
+                                            <ul>
+                                                <li>1 (A)</li>
+                                                <li>1 (B)</li>
+                                            </ul>
+                                        </li>
+                                        <li class="toggle">Chapter 02 (Geometry)
+                                            <ul>
+                                                <li>2 (A)</li>
+                                                <li>2 (B)</li>
+                                            </ul>
+                                        </li>
+                                        <li class="toggle">Chapter 03 (Trigonometry)
+                                            <ul>
+                                                <li>3 (A)</li>
+                                                <li>3 (B)</li>
+                                                <li>3 (C)</li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="toggle">Ms. Farah Sir
+                                    <ul>
+                                        <li class="toggle">Chapter 01 (Statistics)
+                                            <ul>
+                                                <li>1 (A)</li>
+                                                <li>1 (B)</li>
+                                            </ul>
+                                        </li>
+                                        <li class="toggle">Chapter 02 (Probability)
+                                            <ul>
+                                                <li>2 (A)</li>
+                                                <li>2 (B)</li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li class="toggle"><i class="fas fa-school"></i> Class 4
+                            <ul>
+                                <li class="toggle">Mr. Rahman Sir
+                                    <ul>
+                                        <li class="toggle">Chapter 01 (Algebra)
+                                            <ul>
+                                                <li>1 (A)</li>
+                                                <li>1 (B)</li>
+                                            </ul>
+                                        </li>
+                                        <li class="toggle">Chapter 02 (Geometry)
+                                            <ul>
+                                                <li>2 (A)</li>
+                                                <li>2 (B)</li>
+                                            </ul>
+                                        </li>
+                                        <li class="toggle">Chapter 03 (Trigonometry)
+                                            <ul>
+                                                <li>3 (A)</li>
+                                                <li>3 (B)</li>
+                                                <li>3 (C)</li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="toggle">Ms. Farah Sir
+                                    <ul>
+                                        <li class="toggle">Chapter 01 (Statistics)
+                                            <ul>
+                                                <li>1 (A)</li>
+                                                <li>1 (B)</li>
+                                            </ul>
+                                        </li>
+                                        <li class="toggle">Chapter 02 (Probability)
+                                            <ul>
+                                                <li>2 (A)</li>
+                                                <li>2 (B)</li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li class="toggle"><i class="fas fa-chalkboard-teacher"></i> Class 3
+                            <ul>
+                                <li class="toggle">Mr. Rahman Sir
+                                    <ul>
+                                        <li class="toggle">Chapter 01 (Algebra)
+                                            <ul>
+                                                <li>1 (A)</li>
+                                                <li>1 (B)</li>
+                                            </ul>
+                                        </li>
+                                        <li class="toggle">Chapter 02 (Geometry)
+                                            <ul>
+                                                <li>2 (A)</li>
+                                                <li>2 (B)</li>
+                                            </ul>
+                                        </li>
+                                        <li class="toggle">Chapter 03 (Trigonometry)
+                                            <ul>
+                                                <li>3 (A)</li>
+                                                <li>3 (B)</li>
+                                                <li>3 (C)</li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="toggle">Ms. Farah Sir
+                                    <ul>
+                                        <li class="toggle">Chapter 01 (Statistics)
+                                            <ul>
+                                                <li>1 (A)</li>
+                                                <li>1 (B)</li>
+                                            </ul>
+                                        </li>
+                                        <li class="toggle">Chapter 02 (Probability)
+                                            <ul>
+                                                <li>2 (A)</li>
+                                                <li>2 (B)</li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li class="toggle"><i class="fas fa-book"></i> Class 2
+                            <ul>
+                                <li class="toggle">Mr. Rahman Sir
+                                    <ul>
+                                        <li class="toggle">Chapter 01 (Algebra)
+                                            <ul>
+                                                <li>1 (A)</li>
+                                                <li>1 (B)</li>
+                                            </ul>
+                                        </li>
+                                        <li class="toggle">Chapter 02 (Geometry)
+                                            <ul>
+                                                <li>2 (A)</li>
+                                                <li>2 (B)</li>
+                                            </ul>
+                                        </li>
+                                        <li class="toggle">Chapter 03 (Trigonometry)
+                                            <ul>
+                                                <li>3 (A)</li>
+                                                <li>3 (B)</li>
+                                                <li>3 (C)</li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="toggle">Ms. Farah Sir
+                                    <ul>
+                                        <li class="toggle">Chapter 01 (Statistics)
+                                            <ul>
+                                                <li>1 (A)</li>
+                                                <li>1 (B)</li>
+                                            </ul>
+                                        </li>
+                                        <li class="toggle">Chapter 02 (Probability)
+                                            <ul>
+                                                <li>2 (A)</li>
+                                                <li>2 (B)</li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li class="toggle"><i class="fas fa-pencil-alt"></i> Class 1
+                            <ul>
+                                <li class="toggle">Mr. Rahman Sir
+                                    <ul>
+                                        <li class="toggle">Chapter 01 (Algebra)
+                                            <ul>
+                                                <li>1 (A)</li>
+                                                <li>1 (B)</li>
+                                            </ul>
+                                        </li>
+                                        <li class="toggle">Chapter 02 (Geometry)
+                                            <ul>
+                                                <li>2 (A)</li>
+                                                <li>2 (B)</li>
+                                            </ul>
+                                        </li>
+                                        <li class="toggle">Chapter 03 (Trigonometry)
+                                            <ul>
+                                                <li>3 (A)</li>
+                                                <li>3 (B)</li>
+                                                <li>3 (C)</li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="toggle">Ms. Farah Sir
+                                    <ul>
+                                        <li class="toggle">Chapter 01 (Statistics)
+                                            <ul>
+                                                <li>1 (A)</li>
+                                                <li>1 (B)</li>
+                                            </ul>
+                                        </li>
+                                        <li class="toggle">Chapter 02 (Probability)
+                                            <ul>
+                                                <li>2 (A)</li>
+                                                <li>2 (B)</li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <!----------Math Subject End ------>
+                    <!----------Physics Subject Start ------>
+                    <span class="Head-txt"><i class="fas fa-lightbulb"></i>
+                        </i> Physics</span>
+                    <ul class="tree">
+                        <li class="toggle"> ব্যাকরণ
+                            <ul>
+                                <li>উচ্চারণ</li>
+                                <li>সন্ধি</li>
+                            </ul>
+                        <li class="toggle"> নির্মিতি (লিখিত)
+                            <ul>
+                                <li>রচনা</li>
+                                <li>সারাংশ</li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <!----------Physics Subject Start ------>
+                    <!----------Chemistry Subject Start ------>
+                    <span class="Head-txt"><i class="fas fa-flask"></i> Chemistry</span>
+                    <ul class="tree">
+                        <li class="toggle"> ব্যাকরণ
+                            <ul>
+                                <li>উচ্চারণ</li>
+                                <li>সন্ধি</li>
+                            </ul>
+                        <li class="toggle"> নির্মিতি (লিখিত)
+                            <ul>
+                                <li>রচনা</li>
+                                <li>সারাংশ</li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <!----------Chemistry Subject Start ------>
+                    <!----------Biology Subject Start ------>
+                    <span class="Head-txt"><i class="fas fa-dna"></i> Biology</span>
+                    <ul class="tree">
+                        <li class="toggle"> ব্যাকরণ
+                            <ul>
+                                <li>উচ্চারণ</li>
+                                <li>সন্ধি</li>
+                            </ul>
+                        <li class="toggle"> নির্মিতি (লিখিত)
+                            <ul>
+                                <li>রচনা</li>
+                                <li>সারাংশ</li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <!----------Biology Subject End ------>
+                </div>
+            </div>
+            <!-- --------------------------Radio(Study)-End--------------------------- -->
+            <!-- --------------------------Radio(PDF)-start--------------------------- -->
+
+            <div id="pdf-content" class="content-section">
+
+
+                <!------- College Books Start ------>
+                <span class="Head-txt"><i class="fas fa-graduation-cap"></i> College Books</span>
+                <ul class="tree">
+
+                    <li class="toggle"><i class="fas fa-book-open"></i> Bangla
+                        <ul class="tree">
+                            <li><a href="#">NCTB BOOK (2024)</a></li>
+                            <li><a href="#">NCTB BOOK (2023)</a></li>
+                            <li><a href="#">NCTB BOOK (2022)</a></li>
+                            <li><a href="#">NCTB BOOK (2021)</a></li>
+                            <li><a href="#">NCTB BOOK (2020)</a></li>
+                            <li><a href="#">NCTB BOOK (2019)</a></li>
+                            <li><a href="#">NCTB BOOK (2018)</a></li>
+                            <li><a href="#">NCTB BOOK (2017)</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="toggle"><i class="fas fa-globe"></i> English
+                        <ul class="tree">
+                            <li><a href="#">NCTB BOOK (2024)</a></li>
+                            <li><a href="#">NCTB BOOK (2023)</a></li>
+                            <li><a href="#">NCTB BOOK (2022)</a></li>
+                            <li><a href="#">NCTB BOOK (2021)</a></li>
+                            <li><a href="#">NCTB BOOK (2020)</a></li>
+                            <li><a href="#">NCTB BOOK (2019)</a></li>
+                            <li><a href="#">NCTB BOOK (2018)</a></li>
+                            <li><a href="#">NCTB BOOK (2017)</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="toggle"><i class="fas fa-square-root-alt"></i> Math
+                        <ul class="tree">
+                            <li class="toggle"></i> 1st Paper
+                                <ul>
+                                    <li class="toggle">Ketab Uddin Sir</li>
+                                    <li class="toggle">SU Ahmed Sir</li>
+                                </ul>
+                            </li>
+                            <li class="toggle"></i> 2nd Paper
+                                <ul>
+                                    <li class="toggle">Ketab Uddin Sir</li>
+                                    <li class="toggle">SU Ahmed Sir</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li class="toggle"><i class="fas fa-lightbulb"></i> Physics
+                        <ul class="tree">
+                            <li class="toggle"></i> 1st Paper
+                                <ul>
+                                    <li class="toggle">Amir Hossain Ishaq Sir</li>
+                                    <li class="toggle">Shahjahan Topon Sir</li>
+                                </ul>
+                            </li>
+                            <li class="toggle"></i> 2nd Paper
+                                <ul>
+                                    <li class="toggle">Amir Hossain Ishaq Sir</li>
+                                    <li class="toggle">Shahjahan Topon Sir</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li class="toggle"><i class="fas fa-flask"></i> Chemistry
+                        <ul class="tree">
+                            <li class="toggle"></i> 1st Paper
+                                <ul>
+                                    <li class="toggle">Hajari Nag Sir</li>
+                                    <li class="toggle">Sanjit Kumar Guho Sir</li>
+                                </ul>
+                            </li>
+                            <li class="toggle"></i> 2nd Paper
+                                <ul>
+                                    <li class="toggle">Hajari Nag Sir</li>
+                                    <li class="toggle">Sanjit Kumar Guho Sir</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li class="toggle"><i class="fas fa-dna"></i> Biology
+                        <ul class="tree">
+                            <li class="toggle"></i> 1st Paper (Botany)
+                                <ul>
+                                    <li class="toggle">Abul Hasan Sir</li>
+                                    <li class="toggle">Alim Sir</li>
+                                </ul>
+                            </li>
+                            <li class="toggle"></i> 2nd Paper (Zoology)
+                                <ul>
+                                    <li class="toggle">Gazi Ajmal Sir</li>
+                                    <li class="toggle">Alim Sir</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+
+
+
+                    <!-- <li><i class="fas fa-square-root-alt"></i> Math</li>
+                        <li><i class="fas fa-lightbulb"></i> Physics</li>
+                        <li><i class="fas fa-flask"></i> Chemistry</li>
+                        <li><i class="fas fa-dna"></i> Biology</li> -->
+                </ul>
+                <!------College Books Tree End ------>
+
+                <!------- School Books Start ------>
+                <span class="Head-txt"><i class="fas fa-school"></i> School Books</span>
+                <ul class="tree">
+                    <li class="toggle"><i class="fas fa-vial"></i> Class 9-10
+                        <ul>
+                            <li><a href="#">NCTB BOOK (2024)</a></li>
+                            <li><a href="#">NCTB BOOK (2023)</a></li>
+                            <li><a href="#">NCTB BOOK (2022)</a></li>
+                            <li><a href="#">NCTB BOOK (2021)</a></li>
+                            <li><a href="#">NCTB BOOK (2020)</a></li>
+                            <li><a href="#">NCTB BOOK (2019)</a></li>
+                            <li><a href="#">NCTB BOOK (2018)</a></li>
+                            <li><a href="#">NCTB BOOK (2017)</a></li>
+                        </ul>
+                    </li>
+                    <li class="toggle"><i class="fas fa-microscope"></i> Class 8
+                        <ul>
+                            <li><a href="#">NCTB BOOK (2024)</a></li>
+                            <li><a href="#">NCTB BOOK (2023)</a></li>
+                            <li><a href="#">NCTB BOOK (2022)</a></li>
+                            <li><a href="#">NCTB BOOK (2021)</a></li>
+                            <li><a href="#">NCTB BOOK (2020)</a></li>
+                            <li><a href="#">NCTB BOOK (2019)</a></li>
+                            <li><a href="#">NCTB BOOK (2018)</a></li>
+                            <li><a href="#">NCTB BOOK (2017)</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="toggle"><i class="fas fa-drafting-compass"></i> Class 7
+                        <ul>
+                            <li><a href="#">NCTB BOOK (2024)</a></li>
+                            <li><a href="#">NCTB BOOK (2023)</a></li>
+                            <li><a href="#">NCTB BOOK (2022)</a></li>
+                            <li><a href="#">NCTB BOOK (2021)</a></li>
+                            <li><a href="#">NCTB BOOK (2020)</a></li>
+                            <li><a href="#">NCTB BOOK (2019)</a></li>
+                            <li><a href="#">NCTB BOOK (2018)</a></li>
+                            <li><a href="#">NCTB BOOK (2017)</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="toggle"><i class="fas fa-calculator"></i> Class 6
+                        <ul>
+                            <li><a href="#">NCTB BOOK (2024)</a></li>
+                            <li><a href="#">NCTB BOOK (2023)</a></li>
+                            <li><a href="#">NCTB BOOK (2022)</a></li>
+                            <li><a href="#">NCTB BOOK (2021)</a></li>
+                            <li><a href="#">NCTB BOOK (2020)</a></li>
+                            <li><a href="#">NCTB BOOK (2019)</a></li>
+                            <li><a href="#">NCTB BOOK (2018)</a></li>
+                            <li><a href="#">NCTB BOOK (2017)</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="toggle"><i class="fas fa-lightbulb"></i> Class 5
+                        <ul>
+                            <li><a href="#">NCTB BOOK (2024)</a></li>
+                            <li><a href="#">NCTB BOOK (2023)</a></li>
+                            <li><a href="#">NCTB BOOK (2022)</a></li>
+                            <li><a href="#">NCTB BOOK (2021)</a></li>
+                            <li><a href="#">NCTB BOOK (2020)</a></li>
+                            <li><a href="#">NCTB BOOK (2019)</a></li>
+                            <li><a href="#">NCTB BOOK (2018)</a></li>
+                            <li><a href="#">NCTB BOOK (2017)</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="toggle"><i class="fas fa-note-sticky"></i> Class 4
+                        <ul>
+                            <li><a href="#">NCTB BOOK (2024)</a></li>
+                            <li><a href="#">NCTB BOOK (2023)</a></li>
+                            <li><a href="#">NCTB BOOK (2022)</a></li>
+                            <li><a href="#">NCTB BOOK (2021)</a></li>
+                            <li><a href="#">NCTB BOOK (2020)</a></li>
+                            <li><a href="#">NCTB BOOK (2019)</a></li>
+                            <li><a href="#">NCTB BOOK (2018)</a></li>
+                            <li><a href="#">NCTB BOOK (2017)</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="toggle"><i class="fas fa-chalkboard-teacher"></i> Class 3
+                        <ul>
+                            <li><a href="#">NCTB BOOK (2024)</a></li>
+                            <li><a href="#">NCTB BOOK (2023)</a></li>
+                            <li><a href="#">NCTB BOOK (2022)</a></li>
+                            <li><a href="#">NCTB BOOK (2021)</a></li>
+                            <li><a href="#">NCTB BOOK (2020)</a></li>
+                            <li><a href="#">NCTB BOOK (2019)</a></li>
+                            <li><a href="#">NCTB BOOK (2018)</a></li>
+                            <li><a href="#">NCTB BOOK (2017)</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="toggle"><i class="fas fa-book"></i> Class 2
+                        <ul>
+                            <li><a href="#">NCTB BOOK (2024)</a></li>
+                            <li><a href="#">NCTB BOOK (2023)</a></li>
+                            <li><a href="#">NCTB BOOK (2022)</a></li>
+                            <li><a href="#">NCTB BOOK (2021)</a></li>
+                            <li><a href="#">NCTB BOOK (2020)</a></li>
+                            <li><a href="#">NCTB BOOK (2019)</a></li>
+                            <li><a href="#">NCTB BOOK (2018)</a></li>
+                            <li><a href="#">NCTB BOOK (2017)</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="toggle"><i class="fas fa-pencil-alt"></i> Class 1
+                        <ul>
+                            <li><a href="#">NCTB BOOK (2024)</a></li>
+                            <li><a href="#">NCTB BOOK (2023)</a></li>
+                            <li><a href="#">NCTB BOOK (2022)</a></li>
+                            <li><a href="#">NCTB BOOK (2021)</a></li>
+                            <li><a href="#">NCTB BOOK (2020)</a></li>
+                            <li><a href="#">NCTB BOOK (2019)</a></li>
+                            <li><a href="#">NCTB BOOK (2018)</a></li>
+                            <li><a href="#">NCTB BOOK (2017)</a></li>
+                        </ul>
+                    </li>
+
+
+                </ul>
+
+                <!------School Books Tree End ------>
+
+
+            </div>
+            <!-- --------------------------Radio(PDF)-End--------------------------- -->
+            <!-- --------------------------Radio(Resources)-start--------------------------- -->
+
+            <div id="resources-content" class="content-section">
+                <h2 style="text-align: center; color:yellow;">বাংলাদেশের ষড়ঋতু</h2>
+                <h3>ভূমিকা</h3>
+                <p>এক অসাধারণ সৌন্দর্যের নাম বাংলাদেশ। প্রকৃতির মায়া-মমতা যার আপন বৈশিষ্ট্য। যে দেশকে বিধাতা সাজিয়েছেন
+                    তাঁর
+                    আপন মনের মাধুরী মিশিয়ে, সুচারুরূপে, বর্ণাঢ্য করে। সে দেশের নাম বাংলাদেশ। যে দেশের সৌন্দর্যের মাঝে
+                    নেই
+                    কোন কৃত্রিমতার ছোঁয়া, আছে কেবল প্রগাঢ় প্রাকৃতিক সৌন্দর্যের সমারোহ। নিসর্গ যে দেশের অলংকার, প্রকৃতি
+                    যে
+                    দেশের রূপ সুষমার মূল উপকরণ, সে দেশই তো বাংলাদেশ। অপূর্ব সৌন্দর্যে, শস্য-সম্পদে আর প্রকৃতিক
+                    বৈচিত্র্যে
+                    ভরা এমন দেশ পৃথিবীতে আর একটিও নেই। এদেশে জন্মেছি আমি, আমি ধন্য, আমি তৃপ্ত। এ-বাংলার রূপে বিমুগ্ধ কবি
+                    আবেগে উদ্বেলিত হয়ে তাই গেয়ে ওঠেন, "ধন ধান্যে পুষ্পে ভরা, আমাদের এই বসুন্ধরা, তাহার মাঝে আছে দেশ এক
+                    সকল
+                    দেশের সেরা; ও সে স্বপ্ন দিয়ে তৈরি সে দেশ, স্মৃতি দিয়ে ঘেরা।"</p>
+
+                <h3>বাংলার সীমা ও ভূ-প্রকৃতি</h3>
+                <p>ত্রিশ লক্ষ মানুষ যে দেশের জন্য জীবন দিতে পারে, সে দেশ কি যেই-সেই দেশ। সাড়ে সাত কোটি মানুষ দেশপ্রেমে
+                    উদ্বেলিত হয়ে রক্তক্ষয়ী সংগ্রামের মাধ্যমে ১৯৭১ সালের ১৬ই ডিসেম্বর অর্জন করে স্বাধীন বাংলাদেশ। এ
+                    বাংলাকে
+                    ঘিরে উত্তর দিকে রয়েছে পশ্চিমবঙ্গের শ্যামলিমায় জলপাইগুড়ি ও কুচবিহার, উত্তর-পূর্বদিকে আসামের পর্বতময়
+                    অঞ্চল, পূর্বে বৈচিত্র্যময় দেশ বার্মা, পশ্চিমে পশ্চিমবঙ্গ ও বিহারের সমভূমি আর সর্বদক্ষিণে রয়েছে চির
+                    প্রবহমান বঙ্গোপসাগরের শীতল জলধারা।</p>
+            </div>
+            <!-- --------------------------Radio(Resources)-End--------------------------- -->
+
+            <!-- dual text start -->
+            <div class="button-container">
+                <a href="#" class="license-button">
+                    <div class="left">license</div>
+                    <div class="right">MIT</div>
+                </a>
+                <a href="#" class="version-button">
+                    <div class="left">version</div>
+                    <div class="right">1.1.0</div>
+                </a>
+                <a href="#" class="follow-button">
+                    <div class="left">follow</div>
+                    <div class="right">77k</div>
+                </a>
+                <a href="#" class="download-button">
+                    <div class="left">Download</div>
+                    <div class="right">512k</div>
+                </a>
+            </div>
+            <!-- dual text end -->
+        </div>
+
+        <script>
+            // JavaScript to toggle visibility based on radio button selection
+            const radioInputs = document.querySelectorAll('input[type="radio"]');
+            const contentSections = document.querySelectorAll('.content-section');
+
+            radioInputs.forEach(input => {
+                input.addEventListener('change', function () {
+                    const selectedValue = this.value;
+                    contentSections.forEach(section => {
+                        if (section.id === `${selectedValue}-content`) {
+                            section.classList.add('active');
+                        } else {
+                            section.classList.remove('active');
+                        }
+                    });
+                });
+            });
+
+
+
+            // -------------------Tree JS Start---------------------
+
+            document.addEventListener("DOMContentLoaded", function () {
+                var headTxt = document.querySelectorAll(".Head-txt");
+                var tree = document.querySelectorAll(".tree");
+
+                // Hide all trees by default
+                tree.forEach(function (item) {
+                    item.style.display = "none";
+                });
+
+                headTxt.forEach(function (txt) {
+                    txt.addEventListener("click", function () {
+                        var siblingTree = this.nextElementSibling;
+                        siblingTree.style.display = siblingTree.style.display === "none" ? "block" : "none";
+                    });
+                });
+
+                var toggles = document.querySelectorAll(".tree .toggle");
+
+                toggles.forEach(function (toggle) {
+                    var nestedList = toggle.querySelector("ul");
+                    if (nestedList) {
+                        nestedList.style.display = "none";
+                        toggle.classList.remove("open");
+                    }
+
+                    toggle.addEventListener("click", function (event) {
+                        event.stopPropagation();
+                        nestedList = this.querySelector("ul");
+                        if (nestedList) {
+                            nestedList.style.display = nestedList.style.display === "none" ? "block" : "none";
+                            this.classList.toggle("open");
+                        }
+                    });
+
+                    // Prevent blue background on click
+                    toggle.addEventListener("mousedown", function (event) {
+                        event.preventDefault();
+                    });
+                });
+
+                // Prevent non-toggle elements from toggling
+                document.querySelectorAll('.tree li:not(.toggle)').forEach(function (item) {
+                    item.addEventListener('click', function (event) {
+                        event.stopPropagation(); // Prevent event from affecting parent toggle
+                    });
+                });
+            });
+
+            // -------------------Tree JS End---------------------
+
+
+
+
+
+        </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        </div>
+    </header>
+    <!-- --==========================Horizontal Nav======================-- -->
+
+    <div class="wrapper-X">
+        <div class="scroll-container-X">
+            <div class="scroll-content-X">
+                <div class="item-X active-X"><a href="index.html">Home</a></div>
+                <div class="item-X"><a href="#physics">Physics Calculator</a></div>
+                <div class="item-X"><a href="#math">Math Calculator</a></div>
+                <div class="item-X"><a href="#chemistry">Chemistry Calculator</a></div>
+                <div class="item-X"><a href="#converter">Unit Converter</a></div>
+                <div class="item-X"><a href="#home2">Home</a></div>
+                <div class="item-X"><a href="#physics2">Physics Calculator</a></div>
+                <div class="item-X"><a href="#math2">Math Calculator</a></div>
+                <div class="item-X"><a href="#chemistry2">Chemistry Calculator</a></div>
+                <div class="item-X"><a href="#converter2">Unit Converter</a></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Toggle off-canvas menu
+        document.getElementById('menuToggle').addEventListener('click', function () {
+            const offCanvasMenu = document.getElementById('offCanvasMenu');
+            offCanvasMenu.classList.add('open');
+            document.body.classList.add('no-scroll'); // Prevent body scroll when menu is open
+        });
+
+        // Close off-canvas menu
+        document.getElementById('closeMenu').addEventListener('click', function () {
+            const offCanvasMenu = document.getElementById('offCanvasMenu');
+            offCanvasMenu.classList.remove('open');
+            document.body.classList.remove('no-scroll'); // Restore body scroll when menu is closed
+        });
+    </script>
+
+    <!-- --==========================Horizontal Nav======================-- -->
+    <script>
+        // Enable horizontal scrolling with mouse wheel
+        document.querySelector('.scroll-container-X').addEventListener('wheel', function (event) {
+            if (event.deltaY > 0) {
+                this.scrollLeft += 100;
+            } else {
+                this.scrollLeft -= 100;
+            }
+            event.preventDefault();
+        });
+
+        // Add event listener for changing active item on click
+        const items = document.querySelectorAll('.item-X');
+        items.forEach(item => {
+            item.addEventListener('click', function () {
+                // Remove active-X class from all items
+                items.forEach(item => item.classList.remove('active-X'));
+                // Add active-X class to clicked item
+                this.classList.add('active-X');
+            });
+        });
+    </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&display=swap');
+
+        body {
+            font-family: Hind Siliguri, sans-serif;
+            background-color: #333;
+        }
+
+        /* ==========================2-Column-CSS========================== */
+        .containerX-ka2 {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .left-column-ka2 {
+            flex: 0 1 900px;
+            max-width: 900px;
+        }
+
+        .right-column-ka2 {
+            flex: 1;
+        }
+
+        /* Media query for when the second column drops below the first column */
+        @media (max-width: 920px) {
+
+            /* Adjust this breakpoint as needed */
+            .left-column-ka2,
+            .right-column-ka2 {
+                flex: 0 0 100%;
+                max-width: 100%;
+            }
+        }
+    </style>
+    <!-- /* ==========================2-Column-CSS-END========================== */ -->
+
+
+    <!-- ===================================Hero-Section-START====================================== -->
+    <style>
+        /* @import url('https://fonts.googleapis.com/css2?family=Qwitcher+Grypen:wght@400;700&display=swap'); */
+        /* @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&display=swap'); */
+        /* @import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap'); */
+        @import url('https://fonts.googleapis.com/css2?family=Satisfy&display=swap');
+
+        .hero {
+            position: relative;
+            width: 100%;
+            height: 40vh;
+            /* background: url('https://via.placeholder.com/1920x1080') no-repeat center center/cover; */
+            background: url('Assets/dark- forest.jpg') no-repeat center center/cover;
+            background-attachment: fixed;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.473);
+            /* Dark overlay */
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            color: #fff;
+            text-align: center;
+            /* padding: 0 20px; */
+        }
+
+        .hero-content h1 {
+            /* font-family: "Qwitcher Grypen", cursive; */
+            /* font-family: "Dancing Script", cursive; */
+            /* font-family: "Pacifico", cursive; */
+            font-family: "Satisfy", cursive;
+            font-size: 3.5rem;
+            font-weight: normal;
+            /* margin-bottom: 20px; */
+        }
+
+        .hero-content p {
+            font-size: 1.5rem;
+            margin-bottom: 40px;
+        }
+
+        @media (max-width: 768px) {
+            .hero {
+                height: 20vh;
+            }
+
+            .hero::before {
+                background-color: rgba(0, 0, 0, 0.637);
+                /* Dark overlay */
+            }
+
+            .hero-content h1 {
+                font-size: 3.5rem;
+            }
+
+            .hero-content p {
+                font-size: 1.25rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-content h1 {
+                font-size: 2rem;
+            }
+
+            .hero-content p {
+                font-size: 1rem;
+            }
+        }
+    </style>
+    </head>
+
+    <body>
+
+        <div class="hero">
+            <div class="hero-content">
+                <h1>Blog</h1>
+                <!-- <p>Discover amazing content and join our community today.</p> -->
+            </div>
+        </div>
+
+        <!-- ===================================Hero-Section-START====================================== -->
+
+
+
+
+
+
+
+
+    <!-- ================================Blog-Home-START==================================== -->
+    <style>
+        body {
+            background-color: #333;
+        }
+
+        .header-blogX {
+            background-color: #333;
+            color: #fff;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        .header-logo-blogX h1 {
+            margin: 0;
+            font-size: 2rem;
+        }
+
+        .nav-blogX ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            padding: 10px 0;
+        }
+
+        .nav-blogX ul li {
+            margin: 0 15px;
+        }
+
+        .nav-blogX ul li a {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .main-blogX {
+            display: flex;
+            flex-wrap: wrap;
+            max-width: 1200px;
+            margin: 20px auto;
+        }
+
+        .posts-blogX {
+            flex: 2;
+            margin-right: 20px;
+        }
+
+        .post-blogX {
+            background-color: #242424;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: stretch;
+            margin-bottom: 20px;
+        }
+
+        .post-blogX h2 {
+            color: #fff;
+            margin-top: -5px;
+        }
+
+        .post-blogX h2:hover {
+            color: #ff0040;
+        }
+
+        .post-blogX p {
+            color: #ffffff80;
+            text-align: justify;
+        }
+        .post-blogX p:hover {
+            color: #fff;
+        }
+
+        .post-image-blogX {
+            flex: 1;
+            overflow: hidden;
+        }
+
+        .post-image-blogX img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .post-content-blogX {
+            flex: 2;
+            padding: 20px;
+        }
+
+        .post-content-blogX h2 {
+            /* margin-top: -5px; */
+        }
+
+        .date-blogX {
+            color: #48ff00 !important;
+            font-size: 0.9em;
+            /* margin-bottom: 10px; */
+            margin-top: -20px;
+            margin-bottom: -15px;
+        }
+
+        .excerpt-blogX {
+            margin-bottom: 10px;
+        }
+
+        .read-more-blogX {
+            display: block;
+            width: 100%;
+            background-color: #ff0040;
+            color: #fff;
+            text-decoration: none;
+            text-align: center;
+            padding: 1px;
+            /* border-radius: 2px; */
+            font-weight: bold;
+            box-sizing: border-box;
+            padding: 3px;
+        }
+
+        .read-more-blogX:hover {
+            background-color: green;
+        }
+
+        .sidebar-blogX {
+            flex: 1;
+            /* background-color: #242424; */
+            background-color: #333;
+            /* padding: 20px; */
+            /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
+        }
+
+        .sidebar-blogX h3 {
+            margin-top: 0;
+            margin-bottom: -15px;
+            color: #fff;
+            background-color: #242424;
+            font-size: 25px;
+            /* text-align: center; */
+            padding: 3px 10px;
+        }
+        .sidebar-blogX h3:hover {
+            color: #fff;
+            background-color: #ff0040;
+        }
+
+        .sidebar-blogX ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .sidebar-blogX ul li {
+            margin-bottom: 3px;
+            margin-left: 10px;
+        }
+
+        .sidebar-blogX ul li a {
+            color: #ffffff80;
+            text-decoration: none;
+        }
+        .sidebar-blogX ul li a:hover {
+            color: #fff;
+            text-decoration: none;
+        }
+
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .main-blogX {
+                flex-direction: column;
+            }
+
+            .posts-blogX {
+                margin-right: 0;
+            }
+
+            .post-blogX {
+                flex-direction: column;
+                margin: 20px;
+                margin-top: 5px;
+            }
+
+            .post-image-blogX {
+                margin-right: 0;
+                margin-bottom: -10px;
+                height: auto;
+            }
+
+            .post-image-blogX img {
+                height: auto;
+            }
+
+            .read-more-blogX {
+                padding: 2px;
+            }
+
+            .sidebar-blogX {
+                margin: 20px;
+            }
+        }
+    </style>
+
+    <main class="main-blogX">
+        <section class="posts-blogX">
+
+            <!-- =============Post-1 START================= -->
+            <article class="post-blogX">
+                <div class="post-image-blogX">
+                    <!-- ===============400x300 size image=========== -->
+                    <img src="Assets/img (1).jpg" alt="Post-Thumb">
+                </div>
+                <div class="post-content-blogX">
+                    <h2>Metro Rail Paragraph (মেট্রো রেল প্যারাগ্রাফ)</h2>
+                    <p class="date-blogX">Published on August 23, 2024</p>
+                    <p class="excerpt-blogX">The Metro Rail in Bangladesh is a modern and efficient transportation system that has revolutionized
+                        urban travel in Dhaka...বাংলাদেশের মেট্রোরেল একটি আধুনিক ও কার্যকরী পরিবহন ব্যবস্থা, যা ঢাকার নগর যাতায়াতে বিপ্লব ঘটিয়েছে। এটি
+                        শহরের ব্যস্ত সড়কগুলোর তুলনায় একটি দ্রুত...</p>
+                    <a href="Metro-Rail-Paragraph.html" class="read-more-blogX">Read More</a>
+                </div>
+            </article>
+            <!-- =============Post-1 END================= -->
+            <!-- =============Post-2 START================= -->
+            <article class="post-blogX">
+                <div class="post-image-blogX">
+                    <!-- ===============400x300 size image=========== -->
+                    <img src="Assets/img (2).jpg" alt="Post-Thumb">
+                </div>
+                <div class="post-content-blogX">
+                    <h2>Post Title 2</h2>
+                    <p class="date-blogX">Published on August 23, 2024</p>
+                    <p class="excerpt-blogX">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores
+                        voluptates doloribus harum doloremque, possimus molestiae? Eligendi nisi veniam quos voluptas?
+                    </p>
+                    <a href="#" class="read-more-blogX">Read More</a>
+                </div>
+            </article>
+            <!-- =============Post-2 END================= -->
+            <!-- =============Post-3 START================= -->
+            <article class="post-blogX">
+                <div class="post-image-blogX">
+                    <!-- ===============400x300 size image=========== -->
+                    <img src="Assets/img (3).jpg" alt="Post-Thumb">
+                </div>
+                <div class="post-content-blogX">
+                    <h2>Post Title 3</h2>
+                    <p class="date-blogX">Published on August 23, 2024</p>
+                    <p class="excerpt-blogX">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Autem est rem
+                        architecto vitae eius impedit deserunt nulla illum, excepturi at.</p>
+                    <a href="#" class="read-more-blogX">Read More</a>
+                </div>
+            </article>
+            <!-- =============Post-3 END================= -->
+            <!-- =============Post-4 START================= -->
+            <article class="post-blogX">
+                <div class="post-image-blogX">
+                    <!-- ===============400x300 size image=========== -->
+                    <img src="Assets/img (4).jpg" alt="Post-Thumb">
+                </div>
+                <div class="post-content-blogX">
+                    <h2>Post Title 4</h2>
+                    <p class="date-blogX">Published on August 23, 2024</p>
+                    <p class="excerpt-blogX">Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestiae aut
+                        sequi tenetur labore, praesentium sunt dolorum officiis aperiam ut possimus.</p>
+                    <a href="#" class="read-more-blogX">Read More</a>
+                </div>
+            </article>
+            <!-- =============Post-4 END================= -->
+            <!-- =============Post-5 START================= -->
+            <article class="post-blogX">
+                <div class="post-image-blogX">
+                    <!-- ===============400x300 size image=========== -->
+                    <img src="Assets/img (5).jpg" alt="Post-Thumb">
+                </div>
+                <div class="post-content-blogX">
+                    <h2>Post Title 5</h2>
+                    <p class="date-blogX">Published on August 23, 2024</p>
+                    <p class="excerpt-blogX">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quos eligendi
+                        laborum incidunt fugit nam non ipsam consequatur voluptatem cupiditate iusto!</p>
+                    <a href="#" class="read-more-blogX">Read More</a>
+                </div>
+            </article>
+            <!-- =============Post-5 END================= -->
+            <!-- =============Post-6 START================= -->
+            <article class="post-blogX">
+                <div class="post-image-blogX">
+                    <!-- ===============400x300 size image=========== -->
+                    <img src="Assets/img (6).jpg" alt="Post-Thumb">
+                </div>
+                <div class="post-content-blogX">
+                    <h2>Post Title 6</h2>
+                    <p class="date-blogX">Published on August 23, 2024</p>
+                    <p class="excerpt-blogX">Lorem ipsum dolor sit amet consectetur adipisicing elit. Et possimus,
+                        voluptatem hic eaque distinctio excepturi voluptatibus aspernatur. Sint, aut aspernatur!</p>
+                    <a href="#" class="read-more-blogX">Read More</a>
+                </div>
+            </article>
+            <!-- =============Post-6 END================= -->
+            <!-- =============Post-7 START================= -->
+            <article class="post-blogX">
+                <div class="post-image-blogX">
+                    <!-- ===============400x300 size image=========== -->
+                    <img src="Assets/img (7).jpg" alt="Post-Thumb">
+                </div>
+                <div class="post-content-blogX">
+                    <h2>Post Title 7</h2>
+                    <p class="date-blogX">Published on August 23, 2024</p>
+                    <p class="excerpt-blogX">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ex atque numquam
+                        veniam nostrum voluptatem. Nobis alias aliquid nesciunt reprehenderit maxime.</p>
+                    <a href="#" class="read-more-blogX">Read More</a>
+                </div>
+            </article>
+            <!-- =============Post-7 END================= -->
+            <!-- =============Post-8 START================= -->
+            <article class="post-blogX">
+                <div class="post-image-blogX">
+                    <!-- ===============400x300 size image=========== -->
+                    <img src="Assets/img (8).jpg" alt="Post-Thumb">
+                </div>
+                <div class="post-content-blogX">
+                    <h2>Post Title 1</h2>
+                    <p class="date-blogX">Published on August 23, 2024</p>
+                    <p class="excerpt-blogX">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Enim minima
+                        tempora sequi cupiditate suscipit at cum numquam in voluptates praesentium.</p>
+                    <a href="#" class="read-more-blogX">Read More</a>
+                </div>
+            </article>
+            <!-- =============Post-8 END================= -->
+            <!-- =============Post-9 START================= -->
+            <article class="post-blogX">
+                <div class="post-image-blogX">
+                    <!-- ===============400x300 size image=========== -->
+                    <img src="Assets/img (9).jpg" alt="Post-Thumb">
+                </div>
+                <div class="post-content-blogX">
+                    <h2>Post Title 9</h2>
+                    <p class="date-blogX">Published on August 23, 2024</p>
+                    <p class="excerpt-blogX">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Esse, hic
+                        quibusdam illum modi error omnis aperiam explicabo dolorum? Eligendi, eos.</p>
+                    <a href="#" class="read-more-blogX">Read More</a>
+                </div>
+            </article>
+            <!-- =============Post-9 END================= -->
+            <!-- =============Post-10 START================= -->
+            <article class="post-blogX">
+                <div class="post-image-blogX">
+                    <!-- ===============400x300 size image=========== -->
+                    <img src="Assets/img (10).jpg" alt="Post-Thumb">
+                </div>
+                <div class="post-content-blogX">
+                    <h2>Post Title 10</h2>
+                    <p class="date-blogX">Published on August 23, 2024</p>
+                    <p class="excerpt-blogX">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Magnam assumenda
+                        eos totam placeat error! Dicta aspernatur id illo eligendi sequi?</p>
+                    <a href="#" class="read-more-blogX">Read More</a>
+                </div>
+            </article>
+            <!-- =============Post-10 END================= -->
+            <!-- =============Post-11 START================= -->
+            <article class="post-blogX">
+                <div class="post-image-blogX">
+                    <!-- ===============400x300 size image=========== -->
+                    <img src="Assets/img (11).jpg" alt="Post-Thumb">
+                </div>
+                <div class="post-content-blogX">
+                    <h2>Post Title 11</h2>
+                    <p class="date-blogX">Published on August 23, 2024</p>
+                    <p class="excerpt-blogX">Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente aliquam
+                        culpa inventore quibusdam molestiae exercitationem voluptate quisquam magni quas minus?</p>
+                    <a href="#" class="read-more-blogX">Read More</a>
+                </div>
+            </article>
+            <!-- =============Post-11 END================= -->
+
+
+
+
+
+
+
+        </section>
+
+        <aside class="sidebar-blogX">
+            <h3>Categories</h3>
+            <ul>
+                <li><a href="#">Category 1</a></li>
+                <li><a href="#">Category 2</a></li>
+                <li><a href="#">Category 3</a></li>
+            </ul>
+
+            <h3>Recent Posts</h3>
+            <ul>
+                <li><a href="#">Recent Post 1</a></li>
+                <li><a href="#">Recent Post 2</a></li>
+                <li><a href="#">Recent Post 3</a></li>
+            </ul>
+        </aside>
+    </main>
+
+    <!-- ================================Blog-Home-END==================================== -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- ===========================================INFO Card START===================================== -->
+
+    <style>
+        .profile-card {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            /* Center content horizontally */
+            background-color: #242424;
+            /* border-radius: 8px; */
+            padding: 20px;
+            /* width: 100%; */
+            margin: 0 auto;
+        }
+
+        .profile-photo {
+            flex-shrink: 0;
+        }
+
+        .profile-photo img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .profile-info {
+            margin-left: 20px;
+            /* Space between image and text */
+            text-align: center;
+        }
+
+        .profile-info h2 {
+            margin: 0 0 10px;
+            font-size: 16px;
+            color: #fff;
+            margin-bottom: -5px;
+        }
+
+        .profile-info p {
+            margin: 0;
+            color: #fff;
+            font-size: 13px;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 600px) {
+            .profile-card {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .profile-info {
+                margin-left: 0;
+                margin-top: 20px;
+                /* Space between image and text on small screens */
+            }
+        }
+
+        .socialIcons {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            /* Ensures icons wrap on smaller screens */
+            margin-top: -8px;
+        }
+
+        .socialIcons a {
+            text-decoration: none;
+            padding: 2px;
+            /* Reduced padding */
+            margin-top: 5px;
+            /* Reduced margin */
+            margin-right: 2px;
+        }
+
+        .socialIcons a i {
+            font-size: 16px;
+            /* Smaller icon size */
+            color: #fff;
+            opacity: 0.9;
+        }
+
+        .socialIcons a:hover {
+            /* background-color: #111; */
+            transition: 0.5s;
+        }
+
+        .socialIcons a:hover i {
+            color: #ff0040;
+            transition: 0.5s;
+        }
+    </style>
+    </head>
+
+    <body>
+
+        <div class="profile-card">
+            <div class="profile-photo">
+                <img src="Assets/my-photo.jpg" alt="Image-Kawsar Aleev">
+            </div>
+            <div class="profile-info">
+                <h2>Kawsar Aleev</h2>
+                <p>Computer Science & Engineering, UIU</p>
+                <div class="socialIcons">
+                    <a href="#"><i class="fa-brands fa-facebook"></i></a>
+                    <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#"><i class="fa-brands fa-twitter"></i></a>
+                    <a href="#"><i class="fa-brands fa-google-plus"></i></a>
+                    <a href="#"><i class="fa-brands fa-youtube"></i></a>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===========================================INFO Card END===================================== -->
+
+
+
+
+
+
+
+
+
+
+        <!-- ==================================FOOTER START==================================== -->
+
+        <style>
+            footer {
+                background-color: #1d1d1d;
+            }
+
+            .footerContainer {
+                /* padding: 40px 20px 10px;  */
+                padding: 10px 10px;
+                padding-top: 12px;
+            }
+
+            .footerNav {
+                /* margin: 20px 0; */
+                text-align: center;
+                /* Ensure text is centered */
+            }
+
+            .footerNav ul {
+                display: flex;
+                justify-content: center;
+                list-style-type: none;
+                /* This removes the dots */
+                flex-wrap: wrap;
+                padding: 0;
+                /* Optional: Removes any padding from the list */
+                margin: 0;
+                /* Optional: Removes any margin from the list */
+            }
+
+            .footerNav ul li {
+                text-align: center;
+                padding: 0;
+                /* Ensure there's no extra padding */
+                line-height: 0.5;
+            }
+
+            .footerNav ul li a {
+                color: white;
+                margin: 15px;
+                /* Reduced margin */
+                text-decoration: none;
+                font-size: 13px;
+                /* Set font size to 13px */
+                /* opacity: 0.7;
+        transition: 0.5s; */
+            }
+
+            .footerNav ul li a:hover {
+                color: #ff0040;
+                /* opacity: 1; */
+            }
+
+            .footerBottom {
+                background-color: #000;
+                padding: 1px;
+                /* Reduced padding */
+                text-align: center;
+            }
+
+            .footerBottom p {
+            color: white;
+            font-size: 13px;
+            /* Set font size to 13px */
+            margin-top: 3px;
+            margin-bottom: 3px;
+        }
+
+            .designer {
+                opacity: 0.7;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+                font-weight: 400;
+                margin: 0px 5px;
+            }
+
+            .copyright-link {
+                color: #ff0040;
+                text-decoration: none;
+            }
+
+            .copyright-link:hover {
+                color: #00ff6a;
+            }
+
+            @media (max-width: 700px) {
+                .footerNav ul {
+                    /* flex-direction: column; */
+                }
+
+                .footerNav ul li {
+                    text-align: center;
+                    /* margin: 5px;                         */
+                    /* background-color: red; */
+                    padding: 10px 3px;
+                    border: 1px solid #333;
+                }
+            }
+        </style>
+        </head>
+
+        <body>
+            <footer>
+                <div class="footerContainer">
+                    <div class="footerNav">
+                        <ul>
+                            <li><a href="index.html">Home</a></li>
+                            <li><a href="Blog.html">Blog</a></li>
+                            <li><a href="Faqs.html">FAQs</a></li>
+                            <li><a href="#">About</a></li>
+                            <li><a href="#">Contact Us</a></li>
+                            <li><a href="#">Terms & Conditions</a></li>
+                            <li><a href="#">Privacy Policy</a></li>
+                        </ul>
+                    </div>
+
+                </div>
+                <div class="footerBottom">
+                    <!-- <p>Copyright &copy; 2023 | All rights reserved <span class="designer"> Kawsar Aleev</span></p> -->
+                    <p>Copyright &copy; 2023 | All rights reserved @ <a href="#" class="copyright-link">Kawsar
+                            Aleev</a></p>
+
+                </div>
+            </footer>
+
+            <!-- ==================================FOOTER END==================================== -->
+
+
+
+        </body>
+
+</html>

@@ -2904,261 +2904,272 @@
 
 
 
-            <!-- ===========================================INFO Card START===================================== -->
+          <!-- ===========================================INFO Card START===================================== -->
+
+          <style>
+            .profile-card {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                /* Center content horizontally */
+                background-color: #242424;
+                /* border-radius: 8px; */
+                padding: 20px;
+                /* width: 100%; */
+                margin: 0 auto;
+                user-select: none;
+            }
+
+            .profile-photo {
+                flex-shrink: 0;
+            }
+
+            .profile-photo img {
+                width: 100px;
+                height: 100px;
+                border-radius: 50%;
+                object-fit: cover;
+                display: block;
+            }
+
+            .profile-info {
+                margin-left: 20px;
+                /* Space between image and text */
+                text-align: center;
+            }
+
+            .profile-info h2 {
+                margin: 0 0 10px;
+                font-size: 16px;
+                color: #fff;
+                margin-bottom: -5px;
+            }
+
+            .profile-info p {
+                margin: 0;
+                color: #fff;
+                font-size: 13px;
+            }
+
+            /* Responsive Styles */
+            @media (max-width: 600px) {
+                .profile-card {
+                    flex-direction: column;
+                    text-align: center;
+                }
+                .profile-photo img {
+                width: 100px;
+                height: 100px;
+                border-radius: 50%;
+                object-fit: cover;
+                display: block;
+                margin-top: 20px;
+                margin-bottom: -15px;
+            }
+                .profile-info {
+                    margin-left: 0;
+                    margin-top: 20px;
+                    /* Space between image and text on small screens */
+                }
+            }
+
+            .socialIcons {
+                display: flex;
+                justify-content: center;
+                flex-wrap: wrap;
+                /* Ensures icons wrap on smaller screens */
+                margin-top: -8px;
+            }
+
+            .socialIcons a {
+                text-decoration: none;
+                padding: 2px;
+                /* Reduced padding */
+                margin-top: 5px;
+                /* Reduced margin */
+                margin-right: 2px;
+            }
+
+            .socialIcons a i {
+                font-size: 16px;
+                /* Smaller icon size */
+                color: #fff;
+                opacity: 0.9;
+            }
+
+            .socialIcons a:hover {
+                /* background-color: #111; */
+                transition: 0.5s;
+            }
+
+            .socialIcons a:hover i {
+                color: #ff0040;
+                transition: 0.5s;
+            }
+        </style>
+        </head>
+
+        <body>
+
+            <div class="profile-card">
+                <div class="profile-photo">
+                    <img src="Assets/my-photo.jpg" alt="Image-Kawsar Aleev">
+                </div>
+                <div class="profile-info">
+                    <h2>Kawsar Aleev</h2>
+                    <p>Computer Science & Engineering, UIU</p>
+                    <div class="socialIcons">
+                        <a href="#"><i class="fa-brands fa-facebook"></i></a>
+                        <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="#"><i class="fa-brands fa-twitter"></i></a>
+                        <a href="#"><i class="fa-brands fa-google-plus"></i></a>
+                        <a href="#"><i class="fa-brands fa-youtube"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===========================================INFO Card END===================================== -->
+
+
+
+
+
+
+
+
+
+
+            <!-- ==================================FOOTER START==================================== -->
 
             <style>
-                .profile-card {
+                footer {
+                    background-color: #1d1d1d;
+                    user-select: none;
+                }
+
+                .footerContainer {
+                    /* padding: 40px 20px 10px;  */
+                    padding: 10px 10px;
+                    padding-top: 12px;
+                }
+
+                .footerNav {
+                    /* margin: 20px 0; */
+                    text-align: center;
+                    /* Ensure text is centered */
+                }
+
+                .footerNav ul {
                     display: flex;
-                    align-items: center;
                     justify-content: center;
-                    /* Center content horizontally */
-                    background-color: #242424;
-                    /* border-radius: 8px; */
-                    padding: 20px;
-                    /* width: 100%; */
-                    margin: 0 auto;
+                    list-style-type: none;
+                    /* This removes the dots */
+                    flex-wrap: wrap;
+                    padding: 0;
+                    /* Optional: Removes any padding from the list */
+                    margin: 0;
+                    /* Optional: Removes any margin from the list */
                 }
 
-                .profile-photo {
-                    flex-shrink: 0;
+                .footerNav ul li {
+                    text-align: center;
+                    padding: 0;
+                    /* Ensure there's no extra padding */
+                    line-height: 0.5;
                 }
 
-                .profile-photo img {
-                    width: 100px;
-                    height: 100px;
-                    border-radius: 50%;
-                    object-fit: cover;
-                    display: block;
+                .footerNav ul li a {
+                    color: white;
+                    margin: 15px;
+                    /* Reduced margin */
+                    text-decoration: none;
+                    font-size: 13px;
+                    /* Set font size to 13px */
+                    /* opacity: 0.7;
+        transition: 0.5s; */
                 }
 
-                .profile-info {
-                    margin-left: 20px;
-                    /* Space between image and text */
+                .footerNav ul li a:hover {
+                    color: #ff0040;
+                    /* opacity: 1; */
+                }
+
+                .footerBottom {
+                    background-color: #000;
+                    padding: 1px;
+                    /* Reduced padding */
                     text-align: center;
                 }
 
-                .profile-info h2 {
-                    margin: 0 0 10px;
-                    font-size: 16px;
-                    color: #fff;
-                    margin-bottom: -5px;
-                }
-
-                .profile-info p {
-                    margin: 0;
-                    color: #fff;
-                    font-size: 13px;
-                }
-
-                /* Responsive Styles */
-                @media (max-width: 600px) {
-                    .profile-card {
-                        flex-direction: column;
-                        text-align: center;
-                    }
-
-                    .profile-info {
-                        margin-left: 0;
-                        margin-top: 20px;
-                        /* Space between image and text on small screens */
-                    }
-                }
-
-                .socialIcons {
-                    display: flex;
-                    justify-content: center;
-                    flex-wrap: wrap;
-                    /* Ensures icons wrap on smaller screens */
-                    margin-top: -8px;
-                }
-
-                .socialIcons a {
-                    text-decoration: none;
-                    padding: 2px;
-                    /* Reduced padding */
-                    margin-top: 5px;
-                    /* Reduced margin */
-                    margin-right: 2px;
-                }
-
-                .socialIcons a i {
-                    font-size: 16px;
-                    /* Smaller icon size */
-                    color: #fff;
-                    opacity: 0.9;
-                }
-
-                .socialIcons a:hover {
-                    /* background-color: #111; */
-                    transition: 0.5s;
-                }
-
-                .socialIcons a:hover i {
-                    color: #ff0040;
-                    transition: 0.5s;
-                }
-            </style>
-            </head>
-
-            <body>
-
-                <div class="profile-card">
-                    <div class="profile-photo">
-                        <img src="Assets/my-photo.jpg" alt="Image-Kawsar Aleev">
-                    </div>
-                    <div class="profile-info">
-                        <h2>Kawsar Aleev</h2>
-                        <p>Computer Science & Engineering, UIU</p>
-                        <div class="socialIcons">
-                            <a href="#"><i class="fa-brands fa-facebook"></i></a>
-                            <a href="#"><i class="fa-brands fa-instagram"></i></a>
-                            <a href="#"><i class="fa-brands fa-twitter"></i></a>
-                            <a href="#"><i class="fa-brands fa-google-plus"></i></a>
-                            <a href="#"><i class="fa-brands fa-youtube"></i></a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- ===========================================INFO Card END===================================== -->
-
-
-
-
-
-
-
-
-
-
-                <!-- ==================================FOOTER START==================================== -->
-
-                <style>
-                    footer {
-                        background-color: #1d1d1d;
-                    }
-
-                    .footerContainer {
-                        /* padding: 40px 20px 10px;  */
-                        padding: 10px 10px;
-                        padding-top: 12px;
-                    }
-
-                    .footerNav {
-                        /* margin: 20px 0; */
-                        text-align: center;
-                        /* Ensure text is centered */
-                    }
-
-                    .footerNav ul {
-                        display: flex;
-                        justify-content: center;
-                        list-style-type: none;
-                        /* This removes the dots */
-                        flex-wrap: wrap;
-                        padding: 0;
-                        /* Optional: Removes any padding from the list */
-                        margin: 0;
-                        /* Optional: Removes any margin from the list */
-                    }
-
-                    .footerNav ul li {
-                        text-align: center;
-                        padding: 0;
-                        /* Ensure there's no extra padding */
-                        line-height: 0.5;
-                    }
-
-                    .footerNav ul li a {
-                        color: white;
-                        margin: 15px;
-                        /* Reduced margin */
-                        text-decoration: none;
-                        font-size: 13px;
-                        /* Set font size to 13px */
-                        /* opacity: 0.7;
-        transition: 0.5s; */
-                    }
-
-                    .footerNav ul li a:hover {
-                        color: #ff0040;
-                        /* opacity: 1; */
-                    }
-
-                    .footerBottom {
-                        background-color: #000;
-                        padding: 1px;
-                        /* Reduced padding */
-                        text-align: center;
-                    }
-
-                    .footerBottom p {
+                .footerBottom p {
             color: white;
             font-size: 13px;
             /* Set font size to 13px */
             margin-top: 3px;
             margin-bottom: 3px;
         }
-                    .designer {
-                        opacity: 0.7;
-                        text-transform: uppercase;
-                        letter-spacing: 1px;
-                        font-weight: 400;
-                        margin: 0px 5px;
+
+                .designer {
+                    opacity: 0.7;
+                    text-transform: uppercase;
+                    letter-spacing: 1px;
+                    font-weight: 400;
+                    margin: 0px 5px;
+                }
+
+                .copyright-link {
+                    color: #ff0040;
+                    text-decoration: none;
+                }
+
+                .copyright-link:hover {
+                    color: #00ff6a;
+                }
+
+                @media (max-width: 700px) {
+                    .footerNav ul {
+                        /* flex-direction: column; */
                     }
 
-                    .copyright-link {
-                        color: #ff0040;
-                        text-decoration: none;
+                    .footerNav ul li {
+                        text-align: center;
+                        /* margin: 5px;                         */
+                        /* background-color: red; */
+                        padding: 10px 3px;
+                        border: 1px solid #333;
                     }
+                }
+            </style>
+            </head>
 
-                    .copyright-link:hover {
-                        color: #00ff6a;
-                    }
-
-                    @media (max-width: 700px) {
-                        .footerNav ul {
-                            /* flex-direction: column; */
-                        }
-
-                        .footerNav ul li {
-                            text-align: center;
-                            /* margin: 5px;                         */
-                            /* background-color: red; */
-                            padding: 10px 3px;
-                            border: 1px solid #333;
-                        }
-                    }
-                </style>
-                </head>
-
-                <body>
-                    <footer>
-                        <div class="footerContainer">
-                            <div class="footerNav">
-                                <ul>
-                                    <li><a href="index.html">Home</a></li>
-                                    <li><a href="Blog.html">Blog</a></li>
-                                    <li><a href="Faqs.html">FAQs</a></li>
-                                    <li><a href="#">About</a></li>
-                                    <li><a href="#">Contact Us</a></li>
-                                    <li><a href="#">Terms & Conditions</a></li>
-                                    <li><a href="#">Privacy Policy</a></li>
-                                </ul>
-                            </div>
-
+            <body>
+                <footer>
+                    <div class="footerContainer">
+                        <div class="footerNav">
+                            <ul>
+                                <li><a href="index.html">Home</a></li>
+                                <li><a href="Blog.html">Blog</a></li>
+                                <li><a href="Faqs.html">FAQs</a></li>
+                                <li><a href="#">About</a></li>
+                                <li><a href="#">Contact Us</a></li>
+                                <li><a href="#">Terms & Conditions</a></li>
+                                <li><a href="#">Privacy Policy</a></li>
+                            </ul>
                         </div>
-                        <div class="footerBottom">
-                            <!-- <p>Copyright &copy; 2023 | All rights reserved <span class="designer"> Kawsar Aleev</span></p> -->
-                            <p>Copyright &copy; 2023 | All rights reserved @ <a href="#" class="copyright-link">Kawsar
-                                    Aleev</a></p>
 
-                        </div>
-                    </footer>
+                    </div>
+                    <div class="footerBottom">
+                        <!-- <p>Copyright &copy; 2023 | All rights reserved <span class="designer"> Kawsar Aleev</span></p> -->
+                        <p>Copyright &copy; 2023 | All rights reserved @ <a href="#" class="copyright-link">Kawsar
+                                Aleev</a></p>
 
-                    <!-- ==================================FOOTER END==================================== -->
+                    </div>
+                </footer>
+
+                <!-- ==================================FOOTER END==================================== -->
 
 
 
-                </body>
+            </body>
 
 </html>

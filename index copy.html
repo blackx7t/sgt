@@ -11,701 +11,11 @@
         href="https://fonts.googleapis.com/css2?family=Satisfy&family=Hind+Siliguri:wght@300;400;500;600;700&display=swap"
         rel="stylesheet">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="Assets/CSS/main.css">
 
-    <style>
-        body {
-            font-family: Hind Siliguri, sans-serif;
-            background-color: #333;
-            margin: 0;
-            overflow-x: hidden;
-            /* Prevent horizontal scrolling */
-        }
-
-        /* =================================Some Necessary CSS================== */
-        /* ------------Hide-ScrollBar-------- */
-        body {
-            ::-webkit-scrollbar {
-                display: none;
-            }
-        }
-
-        /*------ Remove-Click-Box---------*/
-        a:active,
-        a:focus {
-            outline: 0;
-            border: none;
-            -moz-outline-style: none;
-        }
-
-        a:focus {
-            outline: solid 0px !important;
-        }
-
-        *:focus {
-            outline: 0 !important;
-        }
-
-        /*------ Remove-Click-Blue-Highlight--- */
-        * {
-            -webkit-tap-highlight-color: rgba(255, 255, 255, 0) !important;
-            -webkit-focus-ring-color: rgba(255, 255, 255, 0) !important;
-            outline: none !important;
-        }
-
-        /* Text select korle background green hoye jabe*/
-        ::-moz-selection {
-            background-color: #ff0040;
-            color: #fff;
-        }
-
-        ::selection {
-            background-color: #ff0040;
-            color: #fff;
-        }
-
-
-        /* =================================Some Necessary CSS End================== */
-        .header {
-            display: flex;
-            align-items: center;
-            padding: 10px;
-            background-color: #333;
-            color: white;
-            position: sticky;
-            /* Make the header sticky */
-            top: -1px;
-            /* Stick to the top of the viewport */
-            z-index: 1000;
-            /* Ensure it's above other content */
-            width: 100%;
-            /* Full width */
-            box-sizing: border-box;
-        }
-
-        .scroll-container-X {
-            position: sticky;
-            /* Make the navbar sticky */
-            top: 50px;
-            /* Adjust according to the height of your header */
-            background-color: #242424;
-            /* Darker background for scroll container */
-            width: 100%;
-            overflow-x: auto;
-            white-space: nowrap;
-            padding: 5px 3px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            scrollbar-width: none;
-            /* Firefox */
-            z-index: 999;
-            /* Ensure it's below the header but above other content */
-        }
-
-        .scroll-container-X::-webkit-scrollbar {
-            display: none;
-            /* Chrome, Safari, Opera */
-        }
-
-        .header,
-        .scroll-container-X {
-            width: 100%;
-            box-sizing: border-box;
-            /* Ensure proper width calculation */
-        }
-
-        .logo {
-            font-size: 24px;
-            flex: 1;
-            transition: color 0.3s ease;
-            font-weight: bold;
-            /* background: linear-gradient(270deg, #fcffff, #71ff6c, #50fa7b, #8be9fd, #bd93f9); */
-            /* background: linear-gradient(270deg, #fcffff, #02dbf8, #50fa7b, #f99393, #ff0040); */
-            background: linear-gradient(270deg, #ff0040, #ffffff);
-            background-size: 400% 400%;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: gradientAnimation 10s ease infinite;
-            user-select: none;
-            /* Prevent text selection */
-        }
-
-        @keyframes gradientAnimation {
-            0% {
-                background-position: 0% 50%;
-            }
-
-            50% {
-                background-position: 100% 50%;
-            }
-
-            100% {
-                background-position: 0% 50%;
-            }
-        }
-
-        .nav-menu {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            user-select: none;
-            /* Prevent text selection */
-        }
-
-        .nav-menu a {
-            margin: 0 10px;
-            color: white;
-            text-decoration: none;
-            font-size: 13px;
-        }
-
-        .nav-menu a:hover {
-            color: #ff0040;
-        }
-
-        /* =======================Off-Canvas-Menu-CSS=========================== */
-        .menu-toggle {
-            background: none;
-            border: none;
-            font-size: 24px;
-            color: white;
-            cursor: pointer;
-            margin-left: 20px;
-            margin-right: 20px;
-        }
-
-        /* General Styles */
-        .off-canvas-menu {
-            position: fixed;
-            top: 0;
-            right: -400px;
-            /* Initially hide the menu off-screen for desktop */
-            width: 400px;
-            /* Set the width for desktop */
-            height: 100%;
-            /* Full height of the viewport */
-            background-color: #333;
-            color: white;
-            transition: right 0.3s ease;
-            padding: 20px;
-            box-sizing: border-box;
-            z-index: 1000;
-            overflow-y: auto;
-            /* Allow vertical scrolling if content exceeds viewport */
-            user-select: none;
-            /* Prevent text selection */
-        }
-
-        /* When the menu is open */
-        .off-canvas-menu.open {
-            right: 0;
-            /* Slide in from the right edge */
-        }
-
-        .close-menu {
-            position: absolute;
-            top: 15px;
-            right: 30px;
-            font-size: 30px;
-            cursor: pointer;
-        }
-
-        .Off-Menu-txt {
-            margin-top: -1px;
-            font-weight: bold;
-
-            font-size: 24px;
-            flex: 1;
-            transition: color 0.3s ease;
-            font-weight: bold;
-            background: linear-gradient(270deg, #fcffff, #71ff6c, #50fa7b, #8be9fd, #bd93f9);
-            /* background: linear-gradient(270deg, #fcffff, #02dbf8, #50fa7b, #f99393, #ff0040); */
-            background-size: 400% 400%;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: gradientAnimation 7s ease infinite;
-            user-select: none;
-            /* Prevent text selection */
-        }
-
-        /* Mobile Responsive */
-        @media (max-width: 768px) {
-            .off-canvas-menu {
-                right: -100%;
-                /* Ensure it starts off-screen */
-                width: 100%;
-                /* Full width of the screen */
-                overflow-y: auto;
-                /* Allow vertical scrolling if needed */
-            }
-
-            .off-canvas-menu.open {
-                right: 0;
-                /* Slide in from the right edge */
-            }
-
-            .nav-menu {
-                display: none;
-            }
-
-            .search-container {
-                display: none;
-            }
-
-            .search-icon {
-                display: block;
-            }
-
-            .header {
-                justify-content: space-between;
-                /* Ensure spacing on mobile */
-            }
-
-            .search-box.full-width {
-                width: 100%;
-            }
-
-            .search-box.full-width input {
-                width: calc(100% - 50px);
-                /* Adjust width to fit the container */
-                border-radius: 25px;
-            }
-
-            .search-box.full-width .search-text {
-                display: none;
-            }
-
-            .menu-toggle {
-                margin-right: 10px;
-            }
-
-            .close-menu {
-                top: 10px;
-                right: 25px;
-            }
-
-        }
-
-        /* ================================Horizontal Nav================================== */
-        .wrapper-X {
-            font-family: Hind Siliguri, sans-serif;
-            background-color: #ffffff;
-            /* White background */
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            user-select: none;
-            /* Prevent text selection */
-        }
-
-        .scroll-container-X {
-            position: sticky;
-            /* Make the navbar sticky */
-            top: 50px;
-            /* Adjust according to the height of your header */
-            background-color: #242424;
-            /* Darker background for scroll container */
-            width: 100%;
-            overflow-x: auto;
-            white-space: nowrap;
-            padding: 5px 3px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            scrollbar-width: none;
-            /* Firefox */
-            z-index: 999;
-            /* Ensure it's below the header but above other content */
-        }
-
-        .scroll-container-X::-webkit-scrollbar {
-            display: none;
-            /* Chrome, Safari, Opera */
-        }
-
-        .scroll-content-X {
-            display: flex;
-            flex-wrap: nowrap;
-        }
-
-        .item-X {
-            display: inline-block;
-            width: 100%;
-            margin-right: 10px;
-            background-color: #333;
-            padding: 5px 7px;
-            margin: 0 3px;
-            border-radius: 3px;
-            text-align: center;
-            font-size: 13px;
-        }
-
-        .item-X a {
-            text-decoration: none;
-            color: #fff;
-            /* White text color */
-        }
-
-        .item-X.active-X {
-            background-color: #ff0040;
-            /* Active item background color */
-            color: #fff;
-        }
-
-        .item-X:last-child {
-            margin-right: 0;
-        }
-
-
-
-
-
-
-        /* ============================Tree-Off-Canvas========================= */
-
-        /* Centering the radio buttons */
-        .radio-inputs-container {
-            display: flex;
-            justify-content: center;
-            margin: 20px 0;
-            /* Adjust as needed */
-            width: 100%;
-        }
-
-        /* Centering the entire content */
-        #content {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        /* Ensure form is also centered */
-        form {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-
-
-        .radio-inputs-container {
-            display: flex;
-            justify-content: center;
-            margin: 20px 0;
-            /* Adjust as needed */
-        }
-
-
-        .radio-inputs {
-            position: relative;
-            display: flex;
-            flex-wrap: wrap;
-            border-radius: 5px;
-            background-color: #242424;
-            box-sizing: border-box;
-            box-shadow: 0 0 0px 1px rgba(0, 0, 0, 0.06);
-            padding: 0.25rem;
-            /* width: 300px; */
-            font-size: 14px;
-        }
-
-        .radio-inputs .radio {
-            flex: 1 1 auto;
-            text-align: center;
-        }
-
-        .radio-inputs .radio input {
-            display: none;
-        }
-
-        .radio-inputs .radio .name {
-            display: flex;
-            cursor: pointer;
-            align-items: center;
-            justify-content: center;
-            border-radius: 2px;
-            border: none;
-            padding: .5rem 0;
-            color: rgb(201, 201, 201);
-            transition: all .30s ease-in-out;
-        }
-
-        .radio-inputs .radio input:checked+.name {
-            background-color: #ff0040;
-            color: #fff;
-            font-weight: 600;
-        }
-
-        .content-section {
-            display: none;
-            margin-top: 20px;
-            text-align: left;
-        }
-
-        .content-section.active {
-            display: block;
-        }
-
-        /* -------link style start----------- */
-        a {
-            color: rgb(43, 255, 0);
-            text-decoration: none;
-        }
-
-        /* -------link style end----------- */
-
-        /* -------icon style start----------- */
-        i {
-            color: rgb(255, 255, 255);
-            padding: 0 0 10px 0;
-            /* background-color: violet; */
-            width: 25px;
-            display: inline-block;
-            text-align: center;
-        }
-
-        /* -------icon style end----------- */
-
-        /* ------------------Tree CSS Start---------------------- */
-
-        .wpr-offcanvas-content-right {
-            width: 400px !important;
-            /* Default width for larger screens */
-        }
-
-        /* Media query for mobile devices */
-        @media only screen and (max-width: 600px) {
-            .wpr-offcanvas-content-right {
-                width: 100% !important;
-                /* Width 100% for screens up to 600px wide (typically mobile devices) */
-            }
-        }
-
-
-
-        ul.tree,
-        ul.tree ul {
-            list-style: none;
-            margin: 0;
-            margin-left: 10px;
-            /* Adjust as needed */
-            padding: 0;
-            font-size: 15px;
-        }
-
-        ul.tree ul {
-            margin-left: 20px;
-            /* Adjust as needed */
-            display: none;
-        }
-
-        ul.tree li {
-            margin: 0;
-            padding: 0 7px;
-            line-height: 20px;
-            font-weight: bold;
-            border-left: 1px solid rgb(100, 100, 100);
-            color: white;
-            cursor: pointer;
-            user-select: none;
-        }
-
-        ul.tree li:last-child {
-            border-left: none;
-        }
-
-        ul.tree li:before {
-            position: relative;
-            top: -0.3em;
-            height: 1.3em;
-            /* ekta subitem theke arektar height difference */
-            width: 12px;
-            border-bottom: 1px solid rgb(100, 100, 100);
-            color: white;
-            content: "";
-            display: inline-block;
-            left: -7px;
-        }
-
-        ul.tree li:last-child:before {
-            border-left: 1px solid rgb(100, 100, 100);
-        }
-
-        .Head-txt {
-            font-weight: bold;
-            font-size: 20px;
-            color: rgb(255, 255, 255);
-            cursor: pointer;
-            display: block;
-            /* margin-bottom: 5px; */
-        }
-
-        /* .glow-menu {
-                        position: relative;
-                        color: lime;
-                        text-shadow: 0 0 10px rgba(0, 255, 0, 0.9),
-                            0 0 20px rgba(0, 255, 0, 0.9),
-                            0 0 30px rgba(0, 255, 0, 0.9),
-                            0 0 40px rgba(0, 255, 0, 0.9),
-                            0 0 50px rgba(0, 255, 0, 0.9);
-                        animation: glow 1.5s infinite alternate;
-                        display: inline-block;
-                        padding: 10px 20px;
-                    }
-            
-                    @keyframes glow {
-                        from {
-                            text-shadow: 0 0 10px rgba(0, 255, 0, 0.7),
-                                0 0 20px rgba(0, 255, 0, 0.7),
-                                0 0 30px rgba(0, 255, 0, 0.7),
-                                0 0 40px rgba(0, 255, 0, 0.7),
-                                0 0 50px rgba(0, 255, 0, 0.7);
-                        }
-            
-                        to {
-                            text-shadow: 0 0 20px rgba(0, 255, 0, 1),
-                                0 0 40px rgba(0, 255, 0, 1),
-                                0 0 60px rgba(0, 255, 0, 1),
-                                0 0 80px rgba(0, 255, 0, 1),
-                                0 0 100px rgba(0, 255, 0, 1);
-                        }
-                    } */
-
-        #color-title {
-            color: aqua;
-        }
-
-        .glow-menu {
-            color: lime;
-        }
-
-        .tree-left {
-            align-content: left;
-            justify-content: left;
-
-        }
-
-        /* ------------------Tree CSS End---------------------- */
-
-        /* dual text css start */
-        .button-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 5px;
-            margin-top: 20px;
-        }
-
-        .button-container a {
-            display: flex;
-            font-family: Arial, sans-serif;
-            font-size: 11px;
-            text-align: center;
-            font-weight: bold;
-            text-decoration: none;
-            overflow: hidden;
-            padding: 0 px;
-            /* min-width: 80px;
-                        max-width: 120px; */
-        }
-
-        .license-button .left,
-        .version-button .left,
-        .follow-button .left,
-        .download-button .left {
-            background-color: #4c4c4c;
-            color: white;
-            padding: 5px 5px;
-        }
-
-        .license-button .right,
-        .version-button .right,
-        .follow-button .right,
-        .download-button .right {
-            padding: 5px 5px;
-            color: white;
-        }
-
-        .license-button .right {
-            background-color: #8fc74a;
-        }
-
-        .version-button .right {
-            background-color: #007ec6;
-        }
-
-        .follow-button .right {
-            background-color: #d9634c;
-        }
-
-        .download-button .right {
-            background-color: #ff9100;
-        }
-
-        /* dual text css end */
-
-        /* .Badge-M{
-                        font-size: 10px;
-                        background-color: red;
-                        padding: 0 5px;
-                        border-radius: 2px;
-                        margin-left: 8px;          
-                    } */
-
-        /* .Badge-M {
-                font-size: 10px;
-                background-color: red;
-                padding: 0 5px;
-                border-radius: 2px;
-                margin-left: 8px;
-                display: inline-block;
-                vertical-align: middle; 
-            } */
-
-        .Badge-R {
-            font-size: 10px;
-            /* background: linear-gradient(135deg, #f00, rgb(153, 0, 255)); */
-            background-color: #ff0040;
-            padding: 1px 7px;
-            border-radius: 2px;
-            margin-left: 8px;
-            display: inline-block;
-            vertical-align: middle;
-        }
-
-        .Badge-G {
-            font-size: 10px;
-            /* background: linear-gradient(135deg, #f00, rgb(153, 0, 255)); */
-            background-color: green;
-            padding: 1px 7px;
-            border-radius: 2px;
-            margin-left: 8px;
-            display: inline-block;
-            vertical-align: middle;
-        }
-
-        .fas.fa-rocket {
-            color: rgb(255, 255, 255);
-            padding: 0 0 0px 0;
-            width: 13px;
-        }
-    </style>
 </head>
 
-<body onload="loadFunction()">
-
-
-    <!-- ===============================Preloader START============================== -->
-    <div id="PreLoader"></div>
-    <style>
-        #PreLoader {
-            background: url(Assets/PreLoader.gif) no-repeat center center;
-            background-size: 10%;
-            background-color: #333;
-            height: 100vh;
-            /* width: 100%; */
-            position: fixed;
-            z-index: 99999;
-
-        }
-    </style>
-    <!-- ===============================Preloader END============================== -->
+<body>
 
     <header class="header">
         <div class="logo"><a href="index.html">Script Glitch</a></div>
@@ -1958,7 +1268,13 @@
 
 
 
+<!-- =========================================Glow-Shadow-SVG-START====================================== -->
 
+<img src="./assets/images/shadow-1.svg" width="500" height="800" alt="" class="hero-bg hero-bg-1">
+<!-- <img src="./assets/images/shadow-2.svg" width="500" height="500" alt="" class="hero-bg hero-bg-2"> -->
+<img src="./assets/images/shadow-3.svg" width="500" height="500" alt="" class="hero-bg hero-bg-3">
+
+<!-- =========================================Glow-Shadow-SVG-END====================================== -->
 
 
 
@@ -1982,7 +1298,7 @@
         }
 
         .left-column-K-HM {
-            background-color: #333;
+            /* background-color: #333; */
             color: #fff;
             padding: 20px;
             border-radius: 8px;
@@ -7634,7 +6950,7 @@
 
 
 
-    <style>
+<style>
         .gred-card-div {
             max-width: 1200px;
             margin: auto;
@@ -7645,97 +6961,93 @@
             gap: 20px;
             padding: 20px;
         }
-    
+
         .gred-card {
             padding: 2em;
             width: 300px;
-            background: #242424;
+            /* background: #242424; */
+            background-color: hsla(222, 44%, 13%, 1);;
             text-align: center;
             border-radius: 10px;
             position: relative;
             flex: 1 1 calc(33.333% - 40px);
             margin: 10px;
         }
-    
+
         .gred-card h2 {
             color: #fff;
             font-size: 25px;
             margin-top: -20px;
             margin-bottom: -10px;
         }
-    
+
         .gred-card p {
             color: grey;
         }
-    
+
         .gred-card p:hover {
             color: #fff;
         }
-    
+
         .gred-card a {
             color: #fff;
         }
-    
+
         .gred-card a:hover {
             color: #ff0040;
         }
-    
+
         .gred-card i {
             font-size: 3em;
             margin-bottom: 0.5em;
         }
-    
-/*        
+
         @property --angle {
             syntax: "<angle>";
             initial-value: 0deg;
             inherits: false;
-        } */
-    
+        }
+
         .gred-card::after,
         .gred-card::before {
             content: '';
             position: absolute;
             height: 100%;
             width: 100%;
-            background-image: conic-gradient(from var(--angle), #ff0040, #242424, #ff0040);
+            background-image: conic-gradient(from var(--angle), hsla(222, 44%, 13%, 1), hsla(216, 33%, 20%, 1), hsla(222, 44%, 13%, 1));
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
             z-index: -1;
             padding: 3px;
             border-radius: 10px;
-            animation: 3s spin linear infinite;
+            animation: 2s spin linear infinite;
         }
-    
+
         .gred-card::before {
             filter: blur(1rem);
             opacity: 0.3;
         }
-    
+
         @keyframes spin {
             from {
                 --angle: 0deg;
             }
-    
+
             to {
                 --angle: 360deg;
             }
         }
-    
+
         /* Media query for smaller screens */
         @media (max-width: 768px) {
             .gred-card {
                 flex: 1 1 100%;
                 margin: 10px 0;
             }
+
         }
-    </style>
-    
-    
-    
-
-
+</style>
 
 
     <div class="gred-card-div">
@@ -7803,140 +7115,117 @@
 
 
 
-    <iframe width="560" height="315" src="https://www.youtube.com/embed/TCO_1haUgmk?si=TLIF-Q9kvrhQuvnm" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-    <iframe width="560" height="315" src="https://www.youtube.com/embed/TCO_1haUgmk?si=TLIF-Q9kvrhQuvnm" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-    <iframe width="560" height="315" src="https://www.youtube.com/embed/TCO_1haUgmk?si=TLIF-Q9kvrhQuvnm" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-    <iframe width="560" height="315" src="https://www.youtube.com/embed/TCO_1haUgmk?si=TLIF-Q9kvrhQuvnm" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-    <iframe width="560" height="315" src="https://www.youtube.com/embed/TCO_1haUgmk?si=TLIF-Q9kvrhQuvnm" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-    <iframe width="560" height="315" src="https://www.youtube.com/embed/TCO_1haUgmk?si=TLIF-Q9kvrhQuvnm" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-    <iframe width="560" height="315" src="https://www.youtube.com/embed/TCO_1haUgmk?si=TLIF-Q9kvrhQuvnm" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-
-    <iframe width="560" height="315" src="https://www.youtube.com/embed/TCO_1haUgmk?si=TLIF-Q9kvrhQuvnm" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-    <iframe width="560" height="315" src="https://www.youtube.com/embed/TCO_1haUgmk?si=TLIF-Q9kvrhQuvnm" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-    <iframe width="560" height="315" src="https://www.youtube.com/embed/TCO_1haUgmk?si=TLIF-Q9kvrhQuvnm" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-    <iframe width="560" height="315" src="https://www.youtube.com/embed/TCO_1haUgmk?si=TLIF-Q9kvrhQuvnm" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-    <iframe width="560" height="315" src="https://www.youtube.com/embed/TCO_1haUgmk?si=TLIF-Q9kvrhQuvnm" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     <!-- ===========================================INFO Card START===================================== -->
 
-    <style>
+<style>
+    .profile-card {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        /* Center content horizontally */
+        /* background-color: #242424; */
+        background-color: hsla(222, 44%, 13%, 1);
+        /* border-radius: 8px; */
+        padding: 20px;
+        /* width: 100%; */
+        margin: 0 auto;
+        user-select: none;
+    }
+
+    .profile-photo {
+        flex-shrink: 0;
+    }
+
+    .profile-photo img {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        object-fit: cover;
+        display: block;
+    }
+
+    .profile-info {
+        margin-left: 20px;
+        /* Space between image and text */
+        text-align: center;
+    }
+
+    .profile-info h2 {
+        margin: 0 0 10px;
+        font-size: 16px;
+        color: #fff;
+        margin-bottom: -5px;
+    }
+
+    .profile-info p {
+        margin: 0;
+        color: #fff;
+        font-size: 13px;
+    }
+
+    /* Responsive Styles */
+    @media (max-width: 600px) {
         .profile-card {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            /* Center content horizontally */
-            background-color: #242424;
-            /* border-radius: 8px; */
-            padding: 20px;
-            /* width: 100%; */
-            margin: 0 auto;
-        }
-
-        .profile-photo {
-            flex-shrink: 0;
-        }
-
-        .profile-photo img {
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            object-fit: cover;
-            display: block;
-        }
-
-        .profile-info {
-            margin-left: 20px;
-            /* Space between image and text */
+            flex-direction: column;
             text-align: center;
         }
-
-        .profile-info h2 {
-            margin: 0 0 10px;
-            font-size: 16px;
-            color: #fff;
-            margin-bottom: -5px;
+        .profile-photo img {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        object-fit: cover;
+        display: block;
+        margin-top: 20px;
+        margin-bottom: -15px;
+    }
+        .profile-info {
+            margin-left: 0;
+            margin-top: 20px;
+            /* Space between image and text on small screens */
         }
+    }
 
-        .profile-info p {
-            margin: 0;
-            color: #fff;
-            font-size: 13px;
-        }
+    .socialIcons {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        /* Ensures icons wrap on smaller screens */
+        margin-top: -8px;
+    }
 
-        /* Responsive Styles */
-        @media (max-width: 600px) {
-            .profile-card {
-                flex-direction: column;
-                text-align: center;
-            }
+    .socialIcons a {
+        text-decoration: none;
+        padding: 2px;
+        /* Reduced padding */
+        margin-top: 5px;
+        /* Reduced margin */
+        margin-right: 2px;
+    }
 
-            .profile-info {
-                margin-left: 0;
-                margin-top: 20px;
-                /* Space between image and text on small screens */
-            }
-        }
+    .socialIcons a i {
+        font-size: 16px;
+        /* Smaller icon size */
+        color: #fff;
+        opacity: 0.9;
+    }
 
-        .socialIcons {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            /* Ensures icons wrap on smaller screens */
-            margin-top: -8px;
-        }
+    .socialIcons a:hover {
+        /* background-color: #111; */
+        transition: 0.5s;
+    }
 
-        .socialIcons a {
-            text-decoration: none;
-            padding: 2px;
-            /* Reduced padding */
-            margin-top: 5px;
-            /* Reduced margin */
-            margin-right: 2px;
-        }
+    .socialIcons a:hover i {
+        color: #ff0040;
+        transition: 0.5s;
+    }
+</style>
+</head>
 
-        .socialIcons a i {
-            font-size: 16px;
-            /* Smaller icon size */
-            color: #fff;
-            opacity: 0.9;
-        }
-
-        .socialIcons a:hover {
-            /* background-color: #111; */
-            transition: 0.5s;
-        }
-
-        .socialIcons a:hover i {
-            color: #ff0040;
-            transition: 0.5s;
-        }
-    </style>
-
+<body>
 
     <div class="profile-card">
         <div class="profile-photo">
-            <img src="Assets/my-photo.jpg" alt="Image-Kawsar Aleev">
+            <img src="Assets/Images/my-photo.jpg" alt="Image-Kawsar Aleev">
         </div>
         <div class="profile-info">
             <h2>Kawsar Aleev</h2>
@@ -7966,7 +7255,9 @@
 
     <style>
         footer {
-            background-color: #1d1d1d;
+            /* background-color: #1d1d1d; */
+            background-color: #hsla(222, 47%, 11%, 1);
+            user-select: none;
         }
 
         .footerContainer {
@@ -8008,7 +7299,7 @@
             font-size: 13px;
             /* Set font size to 13px */
             /* opacity: 0.7;
-        transition: 0.5s; */
+transition: 0.5s; */
         }
 
         .footerNav ul li a:hover {
@@ -8024,12 +7315,12 @@
         }
 
         .footerBottom p {
-            color: white;
-            font-size: 13px;
-            /* Set font size to 13px */
-            margin-top: 3px;
-            margin-bottom: 3px;
-        }
+    color: white;
+    font-size: 13px;
+    /* Set font size to 13px */
+    margin-top: 3px;
+    margin-bottom: 3px;
+}
 
         .designer {
             opacity: 0.7;
@@ -8058,46 +7349,41 @@
                 /* margin: 5px;                         */
                 /* background-color: red; */
                 padding: 10px 3px;
-                border: 1px solid #333;
+                /* border: 1px solid #333; */
+                border: 1px solid hsla(216, 33%, 20%, 1);
             }
         }
     </style>
-    <footer>
-        <div class="footerContainer">
-            <div class="footerNav">
-                <ul>
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="Blog.html">Blog</a></li>
-                    <li><a href="Faqs.html">FAQs</a></li>
-                    <li><a href="#">About</a></li>
-                    <li><a href="#">Contact Us</a></li>
-                    <li><a href="#">Terms & Conditions</a></li>
-                    <li><a href="#">Privacy Policy</a></li>
-                </ul>
+    </head>
+
+    <body>
+        <footer>
+            <div class="footerContainer">
+                <div class="footerNav">
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="Blog.html">Blog</a></li>
+                        <li><a href="Faqs.html">FAQs</a></li>
+                        <li><a href="#">About</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">Terms & Conditions</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                    </ul>
+                </div>
+
             </div>
+            <div class="footerBottom">
+                <!-- <p>Copyright &copy; 2023 | All rights reserved <span class="designer"> Kawsar Aleev</span></p> -->
+                <p>Copyright &copy; 2023 | All rights reserved @ <a href="#" class="copyright-link">Kawsar
+                        Aleev</a></p>
 
-        </div>
-        <div class="footerBottom">
-            <!-- <p>Copyright &copy; 2023 | All rights reserved <span class="designer"> Kawsar Aleev</span></p> -->
-            <p>Copyright &copy; 2023 | All rights reserved @ <a href="#" class="copyright-link">Kawsar
-                    Aleev</a></p>
+            </div>
+        </footer>
 
-        </div>
-    </footer>
-
-    <!-- ==================================FOOTER END==================================== -->
-
-    <!-- ===============================Preloader JS START============================== -->
-                <script>
-
-                    var preloader = document.getElementById('PreLoader');
-                    function loadFunction() {
-                        preloader.style.display = 'none';
-                    }
-                </script>
-                <!-- ===============================Preloader JS END============================== -->
+        <!-- ==================================FOOTER END==================================== -->
 
 
-</body>
+
+    </body>
 
 </html>

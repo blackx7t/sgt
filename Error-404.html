@@ -1949,125 +1949,7 @@
  <!-- ===========================================2-Col-FAQ-START===================================== -->
 
 <style>
-    .container-K-AC {
-        display: flex;
-        flex-wrap: wrap;
-        width: 90%;
-        max-width: 1200px;
-        margin: 0 auto;
-        gap: 20px;
-        padding: 20px;
-    }
-
-    .left-column-K-AC,
-    .right-column-K-AC {
-        flex: 1;
-        min-width: 300px;
-    }
-
-    .left-column-K-AC {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-
-    .right-column-K-AC {
-        background-color: #333;
-        color: #fff;
-        padding: 20px;
-        border-radius: 8px;
-        display: flex;
-        flex-direction: column; /* Stack items vertically */
-        justify-content: center; /* Center items vertically */
-        align-items: center; /* Center items horizontally */
-        text-align: center; /* Center text inside each item */
-    }
-
-    .right-column-K-AC h2 {
-        font-family: "Satisfy", cursive;
-        margin-top: -25px;
-        margin-bottom: 10px;
-        padding: 10px;
-        color: #fff;
-        font-weight: bold;
-        font-size: 90px;
-        transition: color 0.3s ease;
-        background: linear-gradient(270deg, #fcffff, #71ff6c, #50fa7b, #8be9fd, #bd93f9);
-        background-size: 400% 400%;
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        animation: gradientAnimation 7s ease infinite;
-        user-select: none; /* Prevent text selection */
-    }
-
-    .PNF-404 {
-        font-size: 35px;
-        font-weight: bold;
-        margin-top: -45px;
-        margin-bottom: -20px;
-        font-style: italic;
-    }
-
-    .PNR-404 {
-        font-size: 15px;
-        font-style:italic;
-    }
     
-    .h-b-404  {
-      display: block;
-      /* width: 100%; */
-      padding: 10px 15px;
-      background-color: #ff0040;
-      color: #fff;
-      font-style: italic;
-      border: none;
-      border-radius: 2px;
-      cursor: pointer;
-      font-size: 16px;
-      transition: background 0.2s ease-in-out;
-      /* margin-top: 20px;
-      margin-bottom: 25px; */
-      background-image: linear-gradient(to top right, yellow 50%, transparent 50%);
-      background-size: 200% 200%;
-      background-position: top right;
-    }
-
-    .h-b-404:hover {
-      background-position: bottom left;
-      color:#000;
-      /* End position on hover */
-    }
-
-
-
-
-    /* Responsive adjustments */
-    @media (max-width: 768px) {
-        .left-column-K-AC,
-        .right-column-K-AC {
-            flex: 1 1 100%;
-        }
-
-        .right-column-K-AC h2 {
-            margin-top: -90px;
-            margin-bottom: -30px;
-            font-size: 60px;
-        }
-
-        .PNF-404 {
-        font-size: 20px;
-        font-weight: bold;
-        margin-top: 1px;
-        margin-bottom: -10px;
-        font-style: italic;
-    }
-
-    .PNR-404 {
-        font-size: 13px;
-        font-style:italic;
-        line-height: 1;
-    }
-    }
 </style>
 
 <div class="container-K-AC">
@@ -2079,7 +1961,11 @@
         <h2>Error 404</h2>
         <p class="PNF-404">Oops! Page Not Found :(</p>
         <p class="PNR-404">The page you are looking for doesn't exist or has been removed</p>
-        <button class="h-b-404" onclick="window.location.href='/'">Go To Homepage</button>
+        <!-- <button class="h-b-404" onclick="window.location.href='/'">Go To Homepage</button> -->
+        <a href="index.html">
+            <button class="h-b-404">Your Button Text</button>
+          </a>
+          
   
     </div>
 </div>
@@ -2093,194 +1979,204 @@
 
 
 
-    <!-- ===========================================INFO Card START===================================== -->
+        <!-- ===========================================INFO Card START===================================== -->
 
-    <style>
-        .profile-card {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            /* Center content horizontally */
-            background-color: #242424;
-            /* border-radius: 8px; */
-            padding: 20px;
-            /* width: 100%; */
-            margin: 0 auto;
-        }
-
-        .profile-photo {
-            flex-shrink: 0;
-        }
-
-        .profile-photo img {
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            object-fit: cover;
-            display: block;
-        }
-
-        .profile-info {
-            margin-left: 20px;
-            /* Space between image and text */
-            text-align: center;
-        }
-
-        .profile-info h2 {
-            margin: 0 0 10px;
-            font-size: 16px;
-            color: #fff;
-            margin-bottom: -5px;
-        }
-
-        .profile-info p {
-            margin: 0;
-            color: #fff;
-            font-size: 13px;
-        }
-
-        /* Responsive Styles */
-        @media (max-width: 600px) {
+        <style>
             .profile-card {
-                flex-direction: column;
-                text-align: center;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                /* Center content horizontally */
+                background-color: #242424;
+                /* border-radius: 8px; */
+                padding: 20px;
+                /* width: 100%; */
+                margin: 0 auto;
+                user-select: none;
+            }
+
+            .profile-photo {
+                flex-shrink: 0;
+            }
+
+            .profile-photo img {
+                width: 100px;
+                height: 100px;
+                border-radius: 50%;
+                object-fit: cover;
+                display: block;
             }
 
             .profile-info {
-                margin-left: 0;
-                margin-top: 20px;
-                /* Space between image and text on small screens */
-            }
-        }
-
-        .socialIcons {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            /* Ensures icons wrap on smaller screens */
-            margin-top: -8px;
-        }
-
-        .socialIcons a {
-            text-decoration: none;
-            padding: 2px;
-            /* Reduced padding */
-            margin-top: 5px;
-            /* Reduced margin */
-            margin-right: 2px;
-        }
-
-        .socialIcons a i {
-            font-size: 16px;
-            /* Smaller icon size */
-            color: #fff;
-            opacity: 0.9;
-        }
-
-        .socialIcons a:hover {
-            /* background-color: #111; */
-            transition: 0.5s;
-        }
-
-        .socialIcons a:hover i {
-            color: #ff0040;
-            transition: 0.5s;
-        }
-    </style>
-    </head>
-
-    <body>
-
-        <div class="profile-card">
-            <div class="profile-photo">
-                <img src="Assets/my-photo.jpg" alt="Image-Kawsar Aleev">
-            </div>
-            <div class="profile-info">
-                <h2>Kawsar Aleev</h2>
-                <p>Computer Science & Engineering, UIU</p>
-                <div class="socialIcons">
-                    <a href="#"><i class="fa-brands fa-facebook"></i></a>
-                    <a href="#"><i class="fa-brands fa-instagram"></i></a>
-                    <a href="#"><i class="fa-brands fa-twitter"></i></a>
-                    <a href="#"><i class="fa-brands fa-google-plus"></i></a>
-                    <a href="#"><i class="fa-brands fa-youtube"></i></a>
-                </div>
-            </div>
-        </div>
-
-        <!-- ===========================================INFO Card END===================================== -->
-
-
-
-
-
-
-
-
-
-
-        <!-- ==================================FOOTER START==================================== -->
-
-        <style>
-            footer {
-                background-color: #1d1d1d;
-            }
-
-            .footerContainer {
-                /* padding: 40px 20px 10px;  */
-                padding: 10px 10px;
-                padding-top: 12px;
-            }
-
-            .footerNav {
-                /* margin: 20px 0; */
+                margin-left: 20px;
+                /* Space between image and text */
                 text-align: center;
-                /* Ensure text is centered */
             }
 
-            .footerNav ul {
+            .profile-info h2 {
+                margin: 0 0 10px;
+                font-size: 16px;
+                color: #fff;
+                margin-bottom: -5px;
+            }
+
+            .profile-info p {
+                margin: 0;
+                color: #fff;
+                font-size: 13px;
+            }
+
+            /* Responsive Styles */
+            @media (max-width: 600px) {
+                .profile-card {
+                    flex-direction: column;
+                    text-align: center;
+                }
+                .profile-photo img {
+                width: 100px;
+                height: 100px;
+                border-radius: 50%;
+                object-fit: cover;
+                display: block;
+                margin-top: 20px;
+                margin-bottom: -15px;
+            }
+                .profile-info {
+                    margin-left: 0;
+                    margin-top: 20px;
+                    /* Space between image and text on small screens */
+                }
+            }
+
+            .socialIcons {
                 display: flex;
                 justify-content: center;
-                list-style-type: none;
-                /* This removes the dots */
                 flex-wrap: wrap;
-                padding: 0;
-                /* Optional: Removes any padding from the list */
-                margin: 0;
-                /* Optional: Removes any margin from the list */
+                /* Ensures icons wrap on smaller screens */
+                margin-top: -8px;
             }
 
-            .footerNav ul li {
-                text-align: center;
-                padding: 0;
-                /* Ensure there's no extra padding */
-                line-height: 0.5;
-            }
-
-            .footerNav ul li a {
-                color: white;
-                margin: 15px;
-                /* Reduced margin */
+            .socialIcons a {
                 text-decoration: none;
-                font-size: 13px;
-                /* Set font size to 13px */
-                /* opacity: 0.7;
-        transition: 0.5s; */
-            }
-
-            .footerNav ul li a:hover {
-                color: #ff0040;
-                /* opacity: 1; */
-            }
-
-            .footerBottom {
-                background-color: #000;
-                padding: 1px;
+                padding: 2px;
                 /* Reduced padding */
-                text-align: center;
+                margin-top: 5px;
+                /* Reduced margin */
+                margin-right: 2px;
             }
 
-            .footerBottom p {
+            .socialIcons a i {
+                font-size: 16px;
+                /* Smaller icon size */
+                color: #fff;
+                opacity: 0.9;
+            }
+
+            .socialIcons a:hover {
+                /* background-color: #111; */
+                transition: 0.5s;
+            }
+
+            .socialIcons a:hover i {
+                color: #ff0040;
+                transition: 0.5s;
+            }
+        </style>
+        </head>
+
+        <body>
+
+            <div class="profile-card">
+                <div class="profile-photo">
+                    <img src="Assets/Images/my-photo.jpg" alt="Image-Kawsar Aleev">
+                </div>
+                <div class="profile-info">
+                    <h2>Kawsar Aleev</h2>
+                    <p>Computer Science & Engineering, UIU</p>
+                    <div class="socialIcons">
+                        <a href="#"><i class="fa-brands fa-facebook"></i></a>
+                        <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="#"><i class="fa-brands fa-twitter"></i></a>
+                        <a href="#"><i class="fa-brands fa-google-plus"></i></a>
+                        <a href="#"><i class="fa-brands fa-youtube"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===========================================INFO Card END===================================== -->
+
+
+
+
+
+
+
+
+
+
+            <!-- ==================================FOOTER START==================================== -->
+
+            <style>
+                footer {
+                    background-color: #1d1d1d;
+                    user-select: none;
+                }
+
+                .footerContainer {
+                    /* padding: 40px 20px 10px;  */
+                    padding: 10px 10px;
+                    padding-top: 12px;
+                }
+
+                .footerNav {
+                    /* margin: 20px 0; */
+                    text-align: center;
+                    /* Ensure text is centered */
+                }
+
+                .footerNav ul {
+                    display: flex;
+                    justify-content: center;
+                    list-style-type: none;
+                    /* This removes the dots */
+                    flex-wrap: wrap;
+                    padding: 0;
+                    /* Optional: Removes any padding from the list */
+                    margin: 0;
+                    /* Optional: Removes any margin from the list */
+                }
+
+                .footerNav ul li {
+                    text-align: center;
+                    padding: 0;
+                    /* Ensure there's no extra padding */
+                    line-height: 0.5;
+                }
+
+                .footerNav ul li a {
+                    color: white;
+                    margin: 15px;
+                    /* Reduced margin */
+                    text-decoration: none;
+                    font-size: 13px;
+                    /* Set font size to 13px */
+                    /* opacity: 0.7;
+        transition: 0.5s; */
+                }
+
+                .footerNav ul li a:hover {
+                    color: #ff0040;
+                    /* opacity: 1; */
+                }
+
+                .footerBottom {
+                    background-color: #000;
+                    padding: 1px;
+                    /* Reduced padding */
+                    text-align: center;
+                }
+
+                .footerBottom p {
             color: white;
             font-size: 13px;
             /* Set font size to 13px */
@@ -2288,67 +2184,67 @@
             margin-bottom: 3px;
         }
 
-            .designer {
-                opacity: 0.7;
-                text-transform: uppercase;
-                letter-spacing: 1px;
-                font-weight: 400;
-                margin: 0px 5px;
-            }
-
-            .copyright-link {
-                color: #ff0040;
-                text-decoration: none;
-            }
-
-            .copyright-link:hover {
-                color: #00ff6a;
-            }
-
-            @media (max-width: 700px) {
-                .footerNav ul {
-                    /* flex-direction: column; */
+                .designer {
+                    opacity: 0.7;
+                    text-transform: uppercase;
+                    letter-spacing: 1px;
+                    font-weight: 400;
+                    margin: 0px 5px;
                 }
 
-                .footerNav ul li {
-                    text-align: center;
-                    /* margin: 5px;                         */
-                    /* background-color: red; */
-                    padding: 10px 3px;
-                    border: 1px solid #333;
+                .copyright-link {
+                    color: #ff0040;
+                    text-decoration: none;
                 }
-            }
-        </style>
-        </head>
 
-        <body>
-            <footer>
-                <div class="footerContainer">
-                    <div class="footerNav">
-                        <ul>
-                            <li><a href="index.html">Home</a></li>
-                            <li><a href="Blog.html">Blog</a></li>
-                            <li><a href="Faqs.html">FAQs</a></li>
-                            <li><a href="#">About</a></li>
-                            <li><a href="#">Contact Us</a></li>
-                            <li><a href="#">Terms & Conditions</a></li>
-                            <li><a href="#">Privacy Policy</a></li>
-                        </ul>
+                .copyright-link:hover {
+                    color: #00ff6a;
+                }
+
+                @media (max-width: 700px) {
+                    .footerNav ul {
+                        /* flex-direction: column; */
+                    }
+
+                    .footerNav ul li {
+                        text-align: center;
+                        /* margin: 5px;                         */
+                        /* background-color: red; */
+                        padding: 10px 3px;
+                        border: 1px solid #333;
+                    }
+                }
+            </style>
+            </head>
+
+            <body>
+                <footer>
+                    <div class="footerContainer">
+                        <div class="footerNav">
+                            <ul>
+                                <li><a href="index.html">Home</a></li>
+                                <li><a href="Blog.html">Blog</a></li>
+                                <li><a href="Faqs.html">FAQs</a></li>
+                                <li><a href="#">About</a></li>
+                                <li><a href="#">Contact Us</a></li>
+                                <li><a href="#">Terms & Conditions</a></li>
+                                <li><a href="#">Privacy Policy</a></li>
+                            </ul>
+                        </div>
+
                     </div>
+                    <div class="footerBottom">
+                        <!-- <p>Copyright &copy; 2023 | All rights reserved <span class="designer"> Kawsar Aleev</span></p> -->
+                        <p>Copyright &copy; 2023 | All rights reserved @ <a href="#" class="copyright-link">Kawsar
+                                Aleev</a></p>
 
-                </div>
-                <div class="footerBottom">
-                    <!-- <p>Copyright &copy; 2023 | All rights reserved <span class="designer"> Kawsar Aleev</span></p> -->
-                    <p>Copyright &copy; 2023 | All rights reserved @ <a href="#" class="copyright-link">Kawsar
-                            Aleev</a></p>
+                    </div>
+                </footer>
 
-                </div>
-            </footer>
-
-            <!-- ==================================FOOTER END==================================== -->
+                <!-- ==================================FOOTER END==================================== -->
 
 
 
-        </body>
+            </body>
 
 </html>
